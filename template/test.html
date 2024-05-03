@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://kit.fontawesome.com/ad55cde596.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://dashboard.fluffici.eu/semantic/semantic.min.css">
+
+    <script type="text/javascript" src="https://dashboard.fluffici.eu/semantic/semantic.min.js"></script>
+    <link rel="stylesheet" href="dashy.css">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .site-header2 {
+            display: block;
+            background-attachment: fixed;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            height: 100%;
+
+            position: sticky;
+            overflow: hidden;
+        }
+        .button-title2 {
+            border-color: #0a4fff;
+            border-radius: 15px;
+            display: inline;
+            width: 150px;
+            height: 50px;
+            margin-top: -10px;
+            margin-left:50%!important;
+        }
+
+        .navbar-link {
+            margin-left:10px;
+            font-family: "Lexend Deca";
+            font-size: x-large;
+            color: white!important;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="site-header2" style="background-image: url('https://autumn.fluffici.eu/attachments/b-5DtPW-_v1jlD8Y7WfULKjcjxaNPbqrj0_ZjmUe6H')">
+        <div class="content-nav">
+            <div class="logo">
+                <img src="https://autumn.fluffici.eu/attachments/eI0QemKZhF6W9EYnDl5JcBGYGvPiIxjPzvrDY_9Klk" width="230" alt="Logo" >
+            </div>
+
+            <img class="neon" src="https://autumn.fluffici.eu/attachments/ystmRycjgISxQse2DtDbZ0O9UD7IIs5QomOCbQHwPd" width="64" alt="Neon" >
+            <img class="arrow" src="https://autumn.fluffici.eu/attachments/eXwIP4Y_XfRvavk6igumYvF4H7m3F_cxEJjbJyMpud" alt="Neon" >
+
+            <div class="nav-bar layout justify-content-center">
+                <a href="{{ route('primary.index') }}" class="navbar-link btn btn-bg"><i class="fa-solid fa-house"></i> Domov</a>
+                <a href="{{ route('primary.akce') }}" class="navbar-link btn btn-bg"><i class="fa-solid fa-star"></i> Akce</a>
+                <a href="{{ route('primary.merch') }}" class="navbar-link btn btn-bg"><i class="fa-solid fa-cart-shopping"></i> Merch</a>
+                <a href="{{ route('primary.wiki') }}" class="navbar-link btn btn-bg"><i class="fa-solid fa-circle-info"></i> Wiki</a>
+            </div>
+        </div>
+
+        <div class="title">
+            Skvělá komunita <br> čeká na tebe!
+        </div>
+
+        <button class="button-title2 btn btn-primary">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Kdo jsme?
+        </button>
+
+        <div class="content-container" style="margin-top: 280px;">
+            <div class="container-md">
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-5 col-xxl-5 px-md-5">
+                        <div class="p-4 p-sm-5 rounded shadow-sm">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
