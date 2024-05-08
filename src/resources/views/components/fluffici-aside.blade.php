@@ -1,11 +1,10 @@
 @php use Illuminate\Support\Facades\Auth; @endphp
 <aside class="sidebar">
     <div class="sidebar-header">
-        <img src="https://autumn.fluffici.eu/attachments/eI0QemKZhF6W9EYnDl5JcBGYGvPiIxjPzvrDY_9Klk" alt="header"
-             width="210" style="padding-bottom: 10px">
+        <a href="{{ route('outings') }}"><img src="https://autumn.fluffici.eu/attachments/eI0QemKZhF6W9EYnDl5JcBGYGvPiIxjPzvrDY_9Klk" alt="header" width="210" class="sidebar-brand"></a>
     </div>
     <div class="sidebar-nav">
-        <h2>Main</h2>
+        <h2>{{ __('common.schedules') }}</h2>
         <ul>
             <li class="{{ request()->routeIs('outings') ? 'active' : '' }}"><a href="{{ route('outings') }}"><i class="fas fa-home"></i> {{ __('common.outings') }}</a></li>
             <li class="{{ request()->routeIs('online-events') ? 'active' : '' }}"><a href="{{ route('online-events') }}"><i class="fas fa-calendar-alt"></i> {{ __('common.online') }}</a></li>
@@ -14,7 +13,7 @@
 
     @if(Auth::check())
         <div class="sidebar-nav">
-            <h2>Profile</h2>
+            <h2>{{ __('common.profile') }}</h2>
             <ul>
                 <li class="{{ request()->routeIs('profile.photos') ? 'active' : '' }}"><a href="{{ route('profile.photos') }}"><i class="fas fa-cog"></i> {{ __('common.photos') }}</a></li>
                 <li class="{{ request()->routeIs('profile.reports') ? 'active' : '' }}"><a href="{{ route('profile.reports') }}"><i class="fas fa-cog"></i> {{ __('common.reports') }}</a></li>

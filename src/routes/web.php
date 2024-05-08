@@ -29,20 +29,19 @@ Route::get('/online-events', [HomeController::class, 'onlineEvents'])
 
 Route::get('/event', [HomeController::class, 'akce']);
 
-Route::middleware('auth')
-    ->get('/profile', [HomeController::class, 'profile'])
-    ->name('profile.general');
-
-Route::middleware('auth')
-    ->get('/submitted-pictures', [HomeController::class, 'submittedPictures'])
+Route::get('/submitted-pictures', [HomeController::class, 'submittedPictures'])
     ->name('profile.photos');
 
-Route::middleware('auth')
-    ->get('/submitted-reports', [HomeController::class, 'submittedReports'])
+Route::get('/submitted-reports', [HomeController::class, 'submittedReports'])
     ->name('profile.reports');
 
-Route::middleware('auth')
-    ->get('/logout', [HomeController::class, 'logout'])
+Route::get('/show-report/{id}', [HomeController::class, 'showReport'])
+    ->name('reports.show');
+
+Route::get('/report-content', [HomeController::class, 'reportContent'])
+    ->name('report.now');
+
+Route::get('/logout', [HomeController::class, 'logout'])
     ->name('profile.logout');
 
 // health check

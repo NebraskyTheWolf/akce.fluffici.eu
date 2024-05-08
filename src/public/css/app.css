@@ -1,4 +1,4 @@
-/* Reset default margin and padding */
+/* Reset default margin, padding, and box-sizing */
 * {
     margin: 0;
     padding: 0;
@@ -17,13 +17,51 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 250px; /* Set sidebar width */
+    width: 250px;
     background-color: #1a1c1c;
     padding: 20px;
     border-radius: 10px;
+    overflow-y: auto;
+    scrollbar-color: #334141 #1F2937; /* scrollbar-thumb-color scrollbar-track-color */
+    scrollbar-width: thin; /* "auto" for OS-dependent style */
     height: 100vh;
-    flex-shrink: 0; /* Prevent sidebar from shrinking */
-    overflow-y: auto; /* Add scrollbar when content exceeds height */
+}
+
+.sidebar-brand {
+    padding-bottom: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    body {
+        display: initial;
+    }
+
+    .sidebar {
+        width: initial;
+        height: initial;
+        padding: 20px;
+        overflow-y: initial;
+        flex-shrink: 1;
+    }
+
+    .sidebar-brand {
+        padding-bottom: 10px;
+        margin-left: 20%;
+    }
+
+    .sidebar-nav {
+        margin-top: 20px;
+    }
+
+    img {
+        height:auto;
+        max-width:100%;
+    }
+
+    .dashboard-section h2 {
+        padding-bottom: 10px;
+        margin-left: 20%;
+    }
 }
 
 .sidebar-header h1 {
@@ -101,6 +139,25 @@ body {
     font-family: 'Lexend Deca', sans-serif;
 }
 
+.header {
+    color: #fff;
+    margin-bottom: 20px;
+    font-family: 'Lexend Deca', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h3 {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.header h3 i {
+    margin-right: 10px;
+}
+
 /* Trello board */
 .trello-board {
     display: flex;
@@ -110,15 +167,30 @@ body {
 }
 
 .trello-column {
-    flex-shrink: 0;
     width: 400px;
     background-color: #1a1c1c;
     padding: 20px;
     border-radius: 10px;
-    position: relative; /* Position relative for pseudo-element */
-    overflow: hidden; /* Hide overflow to prevent pseudo-element from appearing outside */
-    overflow-y: auto; /* Add scrollbar for overflow content */
-    max-height: calc(100vh - 160px); /* Limit max-height to prevent overflowing sidebar and main content */
+    position: relative;
+}
+
+.trello-column-content {
+    overflow-y: auto;
+    max-height: calc(100vh - 160px);
+}
+
+.trello-column-content::-webkit-scrollbar {
+    width: 8px; /* scrollbar width */
+}
+
+.trello-column-content::-webkit-scrollbar-thumb {
+    background-color: #334141; /* scrollbar thumb color */
+    border-radius: 5px; /* scrollbar thumb border radius */
+}
+
+.trello-column-content::-webkit-scrollbar-track {
+    background-color: #1F2937; /* scrollbar track color */
+    border-radius: 5px; /* scrollbar track border radius */
 }
 
 .trello-column h3 {
@@ -136,7 +208,7 @@ body {
     box-shadow: 0 1px 0 rgba(9,30,66,.25);
     cursor: pointer;
     transition: background-color 0.3s ease;
-    position: relative; /* Position relative for pseudo-element */
+    position: relative;
 }
 
 .trello-card::before {
@@ -146,15 +218,15 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    background-color: rgba(255, 255, 255, 0.1);
     z-index: -1;
     border-radius: inherit;
     transition: opacity 0.3s ease;
-    opacity: 0; /* Initially invisible */
+    opacity: 0;
 }
 
 .trello-card:hover::before {
-    opacity: 1; /* Show on hover */
+    opacity: 1;
 }
 
 .trello-card:hover {
@@ -187,8 +259,8 @@ body {
 /* Make Trello card clickable */
 .trello-card a {
     text-decoration: none;
-    color: inherit; /* Inherit text color */
-    display: block; /* Extend clickable area to entire card */
+    color: inherit;
+    display: block;
 }
 
 .sidebar-profile-card {
@@ -219,12 +291,249 @@ body {
 }
 
 .sidebar-nav ul li.active a {
-    color: #FFFFFF; /* Change color to indicate active state */
-    font-weight: bold; /* Optionally make the font bold */
-    border-left: 4px solid #E67E22; /* Add a left border to indicate active state */
-    padding-left: 16px; /* Adjust padding to accommodate the left border */
+    color: #FFFFFF;
+    font-weight: bold;
+    border-left: 4px solid #E67E22;
+    padding-left: 16px;
 }
 
 .sidebar-nav ul li.active a:hover {
-    background-color: #2C3E50; /* Keep the same background color on hover */
+    background-color: #2C3E50;
 }
+
+/* Reports list */
+.reports-list {
+    list-style: none;
+    padding: 0;
+}
+
+.report {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.report-info {
+    flex: 1;
+}
+
+.report-actions {
+    margin-left: 20px;
+}
+
+.report h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333333;
+}
+
+.report p {
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 0.5rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+#upload-form {
+    width: 100%;
+    max-width: 400px; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px;
+    background-color: #252121; /* Example background color */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Example box shadow */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Add margin at the bottom */
+}
+
+.form-group label {
+    display: block; /* Display label as block to stack them */
+    font-family: 'Lexend Deca', sans-serif; /* Use Lexend Deca font */
+    color: #ffffff; /* Set label color to white */
+}
+
+.form-group select,
+.form-group input[type="file"] {
+    width: 100%; /* Make select and input file full width */
+    padding: 10px; /* Add padding for better appearance */
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    border: 1px solid #ccc; /* Add border for input fields */
+    background-color: #f8f8f8; /* Set background color for input fields */
+    color: #333; /* Set text color for input fields */
+}
+
+.form-group select {
+    appearance: none; /* Remove default appearance for select */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="#fff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>'); /* Add custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* Position arrow to the right */
+}
+
+.form-group input[type="file"] {
+    background-color: transparent; /* Set transparent background for file input */
+    border: none; /* Remove border for file input */
+    padding: 0; /* Remove padding for file input */
+}
+
+
+
+#upload-previews {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.upload-preview {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.upload-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.upload-box {
+    border: 2px dashed #FF002E;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.upload-box-title {
+    font-family: 'Lexend Deca', sans-serif;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+}
+
+.upload-box-title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background-color: #FFFFFF;
+    margin-top: 5px;
+}
+
+.upload-box-input {
+    display: none;
+}
+
+.upload-box-label {
+    display: block;
+    background-color: #334141;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-box-label:hover {
+    background-color: #1F2937;
+}
+
+
+.container-event {
+    margin-top: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card-title {
+    font-family: 'Lexend Deca', sans-serif;
+    color: #FF002E;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.card-text,
+.list-group-item {
+    color: #FFFFFF;
+}
+
+.list-group-item strong {
+    color: #FF002E;
+}
+
+.list-group-item {
+    background-color: transparent;
+    border-color: #334141;
+}
+
+.list-group-item:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.list-group-item:not(:last-child) {
+    border-bottom: none;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.row {
+    margin-left: -15px;
+    margin-right: -15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+@media (max-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+

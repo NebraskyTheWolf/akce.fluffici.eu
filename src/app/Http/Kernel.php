@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\LanguageDetector;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -76,6 +77,7 @@ class Kernel extends HttpKernel
         'cache.headers' => SetCacheHeaders::class,
         'precognitive' => HandlePrecognitiveRequests::class,
         'throttle' => ThrottleRequests::class,
-        'guest' => RedirectIfAuthenticated::class
+        'guest' => RedirectIfAuthenticated::class,
+        'auth:check' => Authenticate::class
     ];
 }

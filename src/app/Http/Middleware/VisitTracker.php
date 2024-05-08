@@ -21,7 +21,7 @@ class VisitTracker
         // We use our own system for statistics
 
         $visit = new VisitsStatistics();
-        $visit->application_slug = 'www';
+        $visit->application_slug = 'akce';
         $visit->ip = $request->ip();
 
         if ($request->hasHeader('HTTP_CF_IPCOUNTRY')) {

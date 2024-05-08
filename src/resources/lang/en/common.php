@@ -27,4 +27,7 @@ return [
     'login.success' => 'Login successful!',
     'login.now' => 'You are now logged in.',
     'login.redirecting' => 'Redirecting...',
+
+    'schedules' => 'Schedules',
+    'pictures' => 'Pictures'
 ];

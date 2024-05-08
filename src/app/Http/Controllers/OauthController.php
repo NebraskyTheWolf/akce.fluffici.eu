@@ -65,7 +65,7 @@ class OauthController extends Controller
      *                      otherwise returns null if the authentication is successful.
      * @throws Exception
      */
-    public function oauth(Request $request): Response
+    public function oauth(Request $request): Response|RedirectResponse
     {
         $errorResponse = $this->handleOAuthErrors($request);
         if ($errorResponse) return $errorResponse;
@@ -90,10 +90,10 @@ class OauthController extends Controller
      * Handles OAuth errors.
      *
      * @param mixed $request The request object that contains the OAuth error information.
-     * @return Response|null Returns a Response object if an OAuth error occurred,
+     * @return ?RedirectResponse Returns a Response object if an OAuth error occurred,
      *                      otherwise returns null if no error occurred.
      */
-    private function handleOAuthErrors(mixed $request): ?Response
+    private function handleOAuthErrors(mixed $request): ?RedirectResponse
     {
         $error = $request->query('error') ?? null;
         $errorMessage = $request->query('error_message') ?? null;
@@ -104,11 +104,11 @@ class OauthController extends Controller
      * Validates the authorization code state.
      *
      * @param Request $request The request object containing the authorization code and state.
-     * @return Response|null Returns a Response object if the authorization code or state is missing,
+     * @return ?RedirectResponse Returns a Response object if the authorization code or state is missing,
      *                      or if the server state does not match the session state.
      *                      Returns null if the authorization code state is valid.
      */
-    private function validateAuthorizationCodeState(Request $request): ?Response
+    private function validateAuthorizationCodeState(Request $request): ?RedirectResponse
     {
         $code = $request->query('code');
         $state = $request->query('state');
@@ -134,11 +134,12 @@ class OauthController extends Controller
         return User::find($authorize->getResult());
     }
 
-    public function displayError($code, $message)
+    public function displayError($code, $message): RedirectResponse
     {
-        return response()->view('errors.custom', [
-           'code' => $code,
-           'message' => $message
-        ]);
+        toast()
+            ->danger($message)
+            ->pushOnNextPage();
+
+        return redirect()->route('outings');
     }
 }
