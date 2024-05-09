@@ -111,7 +111,7 @@ class HomeController extends Controller
         $eventId = $request->query('id');
         $event = Events::where('event_id', $eventId);
 
-        if (!$event->exixts()) {
+        if (!$event->exists()) {
             return redirect()->route('outings')->with('flash.error', __('common.event.not_found'));
         }
 
