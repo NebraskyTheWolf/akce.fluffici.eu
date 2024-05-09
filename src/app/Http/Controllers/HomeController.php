@@ -106,10 +106,16 @@ class HomeController extends Controller
         ));
     }
 
-    public function akce(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function akce(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         $eventId = $request->query('id');
-        $event = Events::where('event_id', $eventId)->firstOrFail();
+        $event = Events::where('event_id', $eventId);
+
+        if (!$event->exixts()) {
+            return redirect()->route('outings')->with('flash.error', __('common.event.not_found'));
+        }
+
+        $event = $event->first();
 
         if ($event->startAt === null && $event->begin != null) {
             $start = Carbon::parse($event->begin);
@@ -146,11 +152,7 @@ class HomeController extends Controller
 
     public function submittedPictures(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         if (Auth::guest()) {
-            toast()
-                ->danger(__('common.login.required'))
-                ->pushOnNextPage();
-
-            return redirect()->route(app('authSDK')->getAuthURL());
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
 
         $events = Events::where('status', "ENDED")
@@ -162,11 +164,7 @@ class HomeController extends Controller
 
     public function submittedReports(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         if (Auth::guest()) {
-            toast()
-                ->danger(__('common.login.required'))
-                ->pushOnNextPage();
-
-            return redirect()->route(app('authSDK')->getAuthURL());
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
 
         $reports = ReportedAttachments::where('email', $request->user()->email)
@@ -179,11 +177,7 @@ class HomeController extends Controller
     public function showReport(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
 
         if (Auth::guest()) {
-            toast()
-                ->danger(__('common.login.required'))
-                ->pushOnNextPage();
-
-            return redirect()->route(app('authSDK')->getAuthURL());
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
 
         $report = ReportedAttachments::where('id', $request->id)
@@ -191,11 +185,7 @@ class HomeController extends Controller
             ->where('email', $request->user()->email);
 
         if (!$report->exists()) {
-            toast()
-                ->success(__('common.report.not_found'))
-                ->pushOnNextPage();
-
-            return redirect()->route('outings');
+            return redirect()->route('outings')->with('flash.error', __('common.report.not_found'));
         }
 
         return view('layouts.show-report', compact('report'));
@@ -204,11 +194,7 @@ class HomeController extends Controller
     public function reportContent(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         if (Auth::guest()) {
-            toast()
-                ->danger(__('common.login.required'))
-                ->pushOnNextPage();
-
-            return redirect()->route(app('authSDK')->getAuthURL());
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
 
         $attachment = $request->query('attachment');
@@ -221,11 +207,7 @@ class HomeController extends Controller
         $request->session()->flush();
         Auth::logout();
 
-        toast()
-            ->success(__('common.logged.out'))
-            ->pushOnNextPage();
-
-        return redirect()->route('outings');
+        return redirect()->route('outings')->with('flash.error', __('common.login.logged_out'));
     }
 
     function handleEvent(object $event): void {
