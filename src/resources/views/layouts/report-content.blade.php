@@ -99,19 +99,41 @@
             background-size: 5px 5px, 5px 5px;
             background-repeat: no-repeat;
         }
+
+        textarea#report-message {
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 8px;
+            background-color: #fafafa;
+            box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;  /* Use any font-family you prefer */
+            transition: all 0.3s ease;
+            resize: none; /* Disables resizing */
+        }
+
+        textarea#report-message::placeholder {
+            color: #999;
+        }
+
+        textarea#report-message:focus {
+            outline: none;
+            box-shadow: 0px 2px 5px 0px rgba(66, 133, 244, 0.3);
+        }
     </style>
 @endsection
 
 @section('content')
     <div class="container-event">
-        <h1>{{ __('common.report.content') }}</h1>
-
         <div class="container-report">
-            <h2 class="report-title">Report Content</h2>
-            <form id="report-form" enctype="multipart/form-data">
+            <h2 class="report-title" style="padding: 10px; color: #fff;">{{ __('common.report.content') }}</h2>
+            <form id="report-form" enctype="multipart/form-data" method="POST" action="{{ route('report.push') }}">
+                @csrf
                 <label>
                     <input hidden="" type="text" value="{{ $attachment }}" name="attachment_id">
-                    <input hidden="" type="text" value="{{ Auth::id() }}" name="user_id">
                 </label>
 
                 <div class="form-group">
@@ -127,7 +149,7 @@
                 </div>
                 <div class="form-group">
                     <label for="report-message">Message:</label>
-                    <textarea class="form-control" id="report-message" name="message" rows="5"
+                    <textarea class="form-control" id="report-message" name="message" rows="10" cols="165"
                               placeholder="Write your report here..." required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit Report</button>

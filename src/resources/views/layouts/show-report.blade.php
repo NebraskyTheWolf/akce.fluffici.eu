@@ -25,6 +25,9 @@
 
                             @if($report->reviewed === 1)
                                 <li class="list-group-item"><strong>Reviewed By:</strong> {{ $report->reviewed_by }}</li>
+                                <li class="list-group-item"><strong>Action taken:</strong>
+                                    {{ $report->type }}
+                                </li>
                             @endif
                         </ul>
                     </div>

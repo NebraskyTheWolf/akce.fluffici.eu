@@ -35,5 +35,21 @@ return [
     'select.submit' => 'Upload',
 
     'submitted.reports' => 'Your Reported Content',
-    'view.report' => 'More Information'
+    'view.report' => 'More Information',
+    'account' => 'My account',
+
+    'review.done' => '(Reviewed)',
+    'review.pending' => '(Pending review)',
+
+    'report' => 'Report details',
+    'report.pending_review' => 'Pending review',
+
+    'event.not_found' => 'This event doesn\'t exists.',
+    'login.required' => 'You need to login to access this page.',
+    'report.not_found' => 'This report doesn\'t exists.',
+    'report.success' => 'Your report has been sent, please wait 24 to 48 hours to get a answer.',
+    'schedules' => 'Schedules',
+
+    'discord.required' => 'You need to join Fluffici\'s discord server.',
+    'verification.required' => 'You need to be verified on Fluffici\'s discord server.'
 ];

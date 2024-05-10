@@ -35,5 +35,21 @@ return [
     'select.submit' => 'Nahrát',
 
     'submitted.reports' => 'Vaše nahlášený obsah',
-    'view.report' => 'Více informací'
+    'view.report' => 'Více informací',
+    'account' => 'Můj účet',
+
+    'review.done' => '(Ohodnoceno)',
+    'review.pending' => '(Čeká na ohodnocení)',
+
+    'report' => 'Podrobnosti hlášení',
+    'report.pending_review' => 'Čeká na ohodnocení',
+
+    'event.not_found' => 'Tato událost neexistuje.',
+    'login.required' => 'Pro přístup na tuto stránku se musíte přihlásit.',
+    'report.not_found' => 'Toto hlášení neexistuje.',
+    'report.success' => 'Vaše hlášení bylo odesláno, prosím počkejte 24 až 48 hodin na odpověď.',
+    'schedules' => 'Plány',
+
+    'discord.required' => 'Musíte se připojit na server Flufficiho discordu.',
+    'verification.required' => 'Musíte být ověřeni na serveru Flufficiho discordu.'
 ];

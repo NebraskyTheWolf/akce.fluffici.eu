@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\EventAttachments;
 use App\Models\Events;
 use App\Models\ReportedAttachments;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -139,6 +140,12 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        foreach ($pictures as $picture) {
+            if ($picture->user == null) {
+                $picture->user = User::where('id', $picture->user_id)->first();
+            }
+        }
+
         return view('layouts.event', compact(
             'event',
             'pictures'
@@ -155,12 +162,33 @@ class HomeController extends Controller
             return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
 
-        $events = Events::where('status', "ENDED")
-            ->orderby('created_at', 'desc')
-            ->get();
+        if ($request->user()->discord_linked == 1) {
+            if ($this->isDBVerified($request->user()->discord_id)) {
+                $events = Events::where('status', "ENDED")
+                    ->orderby('created_at', 'desc')
+                    ->get();
 
-        return view('layouts.submit-pictures', compact('events'));
+                return view('layouts.submit-pictures', compact('events'));
+            } else {
+                return redirect()->route('outings')->with('flash.error', __('common.verification.required'));
+            }
+        } else {
+            return redirect()->route('outings')->with('flash.error', __('common.discord.required'));
+        }
     }
+
+    public function isDBVerified(string $snowflake): bool
+    {
+        $response = \Httpful\Request::get("https://frdbapi.fluffici.eu/api/users/" . $snowflake . '/is-verified')->expectsJson()->send();
+
+        if ($response->code === 200) {
+            $body = json_decode(json_encode($response->body), true);
+            return boolval($body['data']['verified']);
+        }
+
+        return false;
+    }
+
 
     public function submittedReports(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         if (Auth::guest()) {
@@ -181,11 +209,20 @@ class HomeController extends Controller
         }
 
         $report = ReportedAttachments::where('id', $request->id)
-            // Being sure that the report belongs to the logged user.
             ->where('email', $request->user()->email);
 
         if (!$report->exists()) {
             return redirect()->route('outings')->with('flash.error', __('common.report.not_found'));
+        }
+
+        $report = $report->first();
+
+        if ($report->type == 'NOTHING') {
+            $report->type = "Upon investigation, we've determined that your case does not warrant the removal of this content.";
+        } else if ($report->type == 'DELETE') {
+            $report->type = "We've opted to remove the content you reported.";
+        } else if ($report->type == 'REPORT') {
+            $report->type = "We've decided to permanently remove the content you reported.";
         }
 
         return view('layouts.show-report', compact('report'));
@@ -199,8 +236,30 @@ class HomeController extends Controller
 
         $attachment = $request->query('attachment');
         return view('layouts.report-content', compact('attachment'));
-
     }
+
+    public function pushReport(Request $request): RedirectResponse
+    {
+        if (Auth::guest()) {
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
+        }
+
+        $attachment = $request->input('attachment_id');
+        $category = $request->input('category');
+        $message = $request->input('message');
+
+        $report = new ReportedAttachments();
+        $report->reason = $category . ': ' . $message;
+        $report->email = $request->user()->email;
+        $report->username = $request->user()->name;
+        $report->isLegalPurpose = false;
+        $report->attachment_id = $attachment;
+        $report->save();
+
+        return redirect()->route('outings')
+            ->with('flash.success', __('common.report.success'));
+    }
+
 
     public function logout(Request $request): RedirectResponse
     {

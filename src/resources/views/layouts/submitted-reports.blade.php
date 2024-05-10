@@ -3,8 +3,6 @@
 
 @section('content')
     <div class="container-event">
-        <h1>{{ __('common.submitted.reports') }}</h1>
-
         @if($reports->isEmpty())
             <p>{{ __('common.no.reports') }}</p>
         @else
@@ -12,7 +10,7 @@
                 @foreach($reports as $report)
                     <li class="report">
                         <div class="report-info">
-                            <h2>{{ $report->reason }}</h2>
+                            <h2>{{ $report->reason }} {{ $report->reviewed ? __('common.review.done') : __('common.review.pending')}}</h2>
                             <p>{{ $report->created_at->format('M d, Y H:i:s') }}</p>
                         </div>
                         <div class="report-actions">

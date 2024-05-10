@@ -44,6 +44,9 @@ Route::get('/report-content', [HomeController::class, 'reportContent'])
 Route::get('/logout', [HomeController::class, 'logout'])
     ->name('profile.logout');
 
+Route::middleware(['auth', 'throttle:10,60'])->post('/report', [HomeController::class, 'pushReport'])
+    ->name('report.push');
+
 // health check
 Route::get('/health', function ($request) {
     return response()->json([
