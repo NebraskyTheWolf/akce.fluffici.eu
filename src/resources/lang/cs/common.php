@@ -27,4 +27,13 @@ return [
     'login.success' => 'Přihlášení úspěšné!',
     'login.now' => 'Nyní jste přihlášeni.',
     'login.redirecting' => 'Přesměrování...',
+
+    'submitted.pictures' => 'Nahrát obrázky',
+    'upload.pictures' => 'Vyberte svůj obrázek a nahrajte je na událost. Tím souhlasíte s pokyny a podmínkami Fluffici.',
+    'select.events' => 'Vyberte událost, na které jste byli',
+    'select.upload' => 'Vyberte více souborů z vašeho počítače',
+    'select.submit' => 'Nahrát',
+
+    'submitted.reports' => 'Vaše nahlášený obsah',
+    'view.report' => 'Více informací'
 ];
