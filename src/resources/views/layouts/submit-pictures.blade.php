@@ -13,13 +13,12 @@
                 <label for="event-select">{{ __('common.select.events') }}</label>
                 <select class="form-control" id="event-select" name="event"
                         form="upload-form" {{ $events->isEmpty() ? 'disabled' : '' }}>
+                    @if($events->isEmpty())
+                        <option>{{ __('common.select.no_events') }}</option>
+                    @endif
                     @foreach($events as $event)
-                        @if($events->isEmpty())
-                            <option>{{ __('common.select.no_events') }}</option>
-                        @else
                             <option>{{ __('common.select.event') }}</option>
-                        @endif
-                        <option value="{{ $event->event_id }}">{{ $event->name }}</option>
+                            <option value="{{ $event->event_id }}">{{ $event->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -70,9 +69,6 @@
                             const body = new FormData();
                             body.append('attachment_id', response.id);
                             body.append('event_id', $('#event-select').val());
-                            body.append('user_id', '{{ Auth::id() }}')
-
-                            console.log(response.id)
 
                             $.ajax({
                                 url: 'https://api.fluffici.eu/api/event/submit-picture',
@@ -80,21 +76,11 @@
                                 data: body,
                                 contentType: false,
                                 processData: false,
-                                success: function (response) {
-                                    const id = response.id;
-
-                                    console.log(response.id)
-
-                                    console.log(`Pictures batch ${id} successfully saved.`)
-                                },
-                                error: function (xhr, status, error) {
-                                    alert('{{ __('common.select.cannot_save') }}')
-                                }
+                                success: function (response) {},
+                                error: function (xhr, status, error) {}
                             });
                         },
-                        error: function (xhr, status, error) {
-                            alert('{{ __('common.select.cannot_send_to_server') }}')
-                        }
+                        error: function (xhr, status, error) {}
                     });
                 });
             });

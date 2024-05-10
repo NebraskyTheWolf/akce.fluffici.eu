@@ -51,5 +51,9 @@ return [
     'schedules' => 'Schedules',
 
     'discord.required' => 'You need to join Fluffici\'s discord server.',
-    'verification.required' => 'You need to be verified on Fluffici\'s discord server.'
+    'verification.required' => 'You need to be verified on Fluffici\'s discord server.',
+
+    'login.logged_out' => "You are now logged out.",
+    'select.no_events' => 'No events available at the moment.',
+    'select.event' => 'Select a event'
 ];
