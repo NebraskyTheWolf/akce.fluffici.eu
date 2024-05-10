@@ -24,7 +24,7 @@ body {
     overflow-y: auto;
     scrollbar-color: #334141 #1F2937; /* scrollbar-thumb-color scrollbar-track-color */
     scrollbar-width: thin; /* "auto" for OS-dependent style */
-    height: 100vh;
+    height: fit-content;
 }
 
 .sidebar-brand {
