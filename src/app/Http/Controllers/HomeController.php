@@ -143,6 +143,12 @@ class HomeController extends Controller
         foreach ($pictures as $picture) {
             if ($picture->user == null) {
                 $picture->user = User::where('id', $picture->user_id)->first();
+
+                if ($picture->user->avatar == 1) {
+                    $picture->user->avatar = "https://autumn.fluffici.eu/avatars/" . $picture->user->avatar_id;
+                } else {
+                    $picture->user->avatar = 'https://ui-avatars.com/api/?name=' . $picture->user->name . '&background=0D8ABC&color=fff';
+                }
             }
         }
 
