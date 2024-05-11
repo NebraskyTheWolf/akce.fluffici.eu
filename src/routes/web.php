@@ -1,12 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Models\PostsComments;
-use App\Models\PostsLikes;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use function App\Models\PostsLikes;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +35,12 @@ Route::get('/show-report/{id}', [HomeController::class, 'showReport'])
 
 Route::get('/report-content', [HomeController::class, 'reportContent'])
     ->name('report.now');
+
+Route::get('/subscribes', [HomeController::class, 'subscribeNotification'])
+    ->name('notification.subscribes');
+
+Route::get('/event/{eventId}/mark-interest', [HomeController::class, 'markInterested'])
+    ->name('event.interest');
 
 Route::get('/logout', [HomeController::class, 'logout'])
     ->name('profile.logout');

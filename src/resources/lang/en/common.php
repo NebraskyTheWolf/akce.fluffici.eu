@@ -55,5 +55,12 @@ return [
 
     'login.logged_out' => "You are now logged out.",
     'select.no_events' => 'No events available at the moment.',
-    'select.event' => 'Select a event'
+    'select.event' => 'Select a event',
+
+    'subscribe' => "Subscribe to the reminders",
+    'unsubscribe.success' => 'You unsubscribed to the event(s) reminder(s).',
+    'subscribe.success' => 'You subscribed to the event(s) reminder(s).',
+
+    'interest' => "Follow",
+    'interest.success' => 'You have put your interest on :event you will get notified on updates.'
 ];

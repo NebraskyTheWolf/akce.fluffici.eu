@@ -54,5 +54,8 @@ return [
     'verification.required' => 'Musíte být ověřeni na serveru Flufficiho discordu',
     'login.logged_out' => 'Nyní jste odhlášeni',
     'select.no_events' => 'V tuto chvíli nejsou k dispozici žádné události',
-    'select.event' => 'Vyberte událost'
+    'select.event' => 'Vyberte událost',
+
+    'subscribe' => 'Přihlaste se k odběru připomínek',
+    'interest' => 'Sledovat'
 ];

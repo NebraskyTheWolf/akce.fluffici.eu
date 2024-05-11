@@ -62,6 +62,7 @@
             <div class="event-info-header">
                 <h2 class="event-info-title">{{ $event->name }}</h2>
                 <div class="event-info-status">{{ $event->status }}</div>
+                <a class="subscribe" href="{{ route('event.interest', [ 'eventId' => $event->event_id ]) }}">{{ __('common.interest') }}</a>
             </div>
             <p class="event-info-details">{{ __('common.start.date') }}: {{ $event->startAt }}</p>
             <p class="event-info-details">{{ __('common.end.date') }}: {{ $event->endAt }}</p>

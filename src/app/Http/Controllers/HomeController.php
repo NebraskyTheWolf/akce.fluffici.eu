@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\EventAttachments;
 use App\Models\Events;
+use App\Models\EventsInteresteds;
 use App\Models\ReportedAttachments;
+use App\Models\Subscriptions;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
@@ -13,24 +15,48 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/*
+===========================================
+ SOFTWARE PRODUCT PROPRIETARY LICENSE
+===========================================
+
+Fluffici z.s., IČO: 19786077, Year: 2024
+
+DEVELOPER INFORMATION:
+Developer Name: Vakea
+Contact Information: vakea@fluffici.eu
+
+TERMS AND CONDITIONS FOR USAGE
+
+1. You may only use the Software Product in accordance with the accompanying documentation.
+2. Reproduction and distribution of the Software Product are strictly prohibited, except through official channels defined and controlled by the copyright holder. Any illegal reproduction or distribution will be subject to legal action.
+3. You may not modify or make derivative works of the Software Product.
+4. You must retain all copyright, trademark, and proprietary notices on all copies of the Software Product made, if any.
+5. You are not granted any rights to any trademarks or service marks of the Software Product.
+
+THIS SOFTWARE PRODUCT IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+
+===========================================
+*/
+
 class HomeController extends Controller
 {
     public function outings(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application {
         $incoming = Events::where('status', 'INCOMING')
             ->where('type', 'PHYSICAL')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
         $started = Events::where('status', 'STARTED')
             ->where('type', 'PHYSICAL')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
         $finished = Events::where('status', 'ENDED')
             ->where('type', 'PHYSICAL')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
         $cancelled = Events::where('status', 'CANCELLED')
             ->where('type', 'PHYSICAL')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         foreach ($incoming as $event) {
@@ -64,19 +90,19 @@ class HomeController extends Controller
     {
         $incoming = Events::where('status', 'INCOMING')
             ->where('type', 'ONLINE')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
         $started = Events::where('status', 'STARTED')
             ->where('type', 'ONLINE')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
         $finished = Events::where('status', 'ENDED')
             ->where('type', 'ONLINE')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
         $cancelled = Events::where('status', 'CANCELLED')
             ->where('type', 'ONLINE')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         foreach ($incoming as $event) {
@@ -171,6 +197,7 @@ class HomeController extends Controller
         if ($request->user()->discord_linked == 1) {
             if ($this->isDBVerified($request->user()->discord_id)) {
                 $events = Events::where('status', "ENDED")
+                    ->where('type', 'PHYSICAL')
                     ->orderby('created_at', 'desc')
                     ->get();
 
@@ -224,18 +251,17 @@ class HomeController extends Controller
         $report = $report->first();
 
         if ($report->type == 'NOTHING') {
-            $report->type = "Upon investigation, we've determined that your case does not warrant the removal of this content.";
+            $report->type = "Po vyšetření jsme zjistili, že váš případ neoprávnění odstranění tohoto obsahu.";
         } else if ($report->type == 'DELETE') {
-            $report->type = "We've opted to remove the content you reported.";
+            $report->type = "Rozhodli jsme se odstranit obsah, který jste nahlásili.";
         } else if ($report->type == 'REPORT') {
-            $report->type = "We've decided to permanently remove the content you reported.";
+            $report->type = "Rozhodli jsme se trvale odstranit obsah, který jste nahlásili.";
         }
 
         return view('layouts.show-report', compact('report'));
     }
 
-    public function reportContent(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse
-    {
+    public function reportContent(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         if (Auth::guest()) {
             return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
@@ -244,8 +270,7 @@ class HomeController extends Controller
         return view('layouts.report-content', compact('attachment'));
     }
 
-    public function pushReport(Request $request): RedirectResponse
-    {
+    public function pushReport(Request $request): RedirectResponse {
         if (Auth::guest()) {
             return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
@@ -266,9 +291,62 @@ class HomeController extends Controller
             ->with('flash.success', __('common.report.success'));
     }
 
+    public function subscribeNotification(Request $request): RedirectResponse {
+        if (Auth::guest()) {
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
+        }
 
-    public function logout(Request $request): RedirectResponse
-    {
+        $subscription = Subscriptions::where('user_id', $request->user()->id);
+        if ($subscription->exists()) {
+            $subscription = $subscription->first();
+
+            if ($subscription->is_subscribed == 1) {
+                $subscription->update(['is_subscribed' => false]);
+
+                return redirect()->route('outings')
+                    ->with('flash.info', __('common.unsubscribe.success'));
+            } else {
+                $subscription->update(['is_subscribed' => true]);
+
+                return redirect()->route('outings')
+                    ->with('flash.info', __('common.subscribe.success'));
+            }
+        } else {
+            $subscription = new Subscriptions();
+            $subscription->user_id = $request->user()->id;
+            $subscription->is_subscribed = true;
+            $subscription->save();
+
+            return redirect()->route('outings')
+                ->with('flash.success', __('common.subscribe.success'));
+        }
+    }
+
+    public function markInterested(Request $request): RedirectResponse {
+        if (Auth::guest()) {
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
+        }
+
+        $eventId = $request->eventId;
+
+        $event = Events::where('event_id', $eventId);
+        if (!$event->exists()) {
+            return redirect()->route('outings')->with('flash.error', __('common.event.not_found'));
+        }
+
+        $event = $event->first();
+
+        $interested = new EventsInteresteds();
+        $interested->event_id = $event->event_id;
+        $interested->username = $request->user()->name;
+        $interested->save();
+
+        return redirect()->route('outings')
+            ->with('flash.success', __('common.interest.success'));
+    }
+
+
+    public function logout(Request $request): RedirectResponse {
         $request->session()->flush();
         Auth::logout();
 
@@ -279,7 +357,7 @@ class HomeController extends Controller
         if ($event->thumbnail === null && $event->thumbnail_id != null) {
             $event->thumbnail = "https://autumn.fluffici.eu/attachments/{$event->thumbnail_id}?width=600&height=300";
         } else if ($event->thumbnail === null) {
-            $event->thumbnail = "https://placehold.co/600x300";
+            $event->thumbnail = "none";
         }
 
         if ($event->startAt === null && $event->begin != null) {

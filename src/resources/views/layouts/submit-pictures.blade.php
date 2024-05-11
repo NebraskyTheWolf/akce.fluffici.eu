@@ -15,9 +15,10 @@
                         form="upload-form" {{ $events->isEmpty() ? 'disabled' : '' }}>
                     @if($events->isEmpty())
                         <option>{{ __('common.select.no_events') }}</option>
+                    @else
+                        <option>{{ __('common.select.event') }}</option>
                     @endif
                     @foreach($events as $event)
-                            <option>{{ __('common.select.event') }}</option>
                             <option value="{{ $event->event_id }}">{{ $event->name }}</option>
                     @endforeach
                 </select>

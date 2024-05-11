@@ -14,7 +14,7 @@
                     @foreach($incoming as $event)
                         <a href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
                             <div class="trello-card">
-                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}">
+                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
                                 <div class="card-title">{{ $event->name }}</div>
                                 <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
                                 <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
@@ -30,7 +30,7 @@
                     @foreach($started as $event)
                         <a href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
                             <div class="trello-card">
-                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}">
+                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
                                 <div class="card-title">{{ $event->name }}</div>
                                 <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
                                 <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
@@ -46,7 +46,7 @@
                     @foreach($finished as $event)
                         <a href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
                             <div class="trello-card">
-                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}">
+                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
                                 <div class="card-title">{{ $event->name }}</div>
                                 <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
                                 <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
@@ -62,7 +62,7 @@
                     @foreach($cancelled as $event)
                         <a href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
                             <div class="trello-card">
-                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}">
+                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
                                 <div class="card-title">{{ $event->name }}</div>
                                 <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
                                 <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>

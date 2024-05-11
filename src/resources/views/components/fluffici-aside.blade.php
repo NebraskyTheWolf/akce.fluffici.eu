@@ -30,7 +30,9 @@
             <p style="color: #fff">{{ Auth::user()->name }}</p>
             <a class="logout-btn" href="https://account.fluffici.eu">{{ __('common.account') }}</a>
         </div>
+
         <a class="logout-btn" href="{{ route('profile.logout') }}">{{ __('common.logout') }}</a>
+        <a class="subscribe" href="{{ route('notification.subscribes') }}">{{ __('common.subscribe') }}</a>
     @else
         <a class="logout-btn" href="{{ app('authSDK')->getAuthURL() }}">{{ __('common.login') }}</a>
     @endif

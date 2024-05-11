@@ -1,10 +1,8 @@
-@php use Illuminate\Support\Facades\Auth; @endphp
 @extends('index')
 @section('title', __('common.report.content'))
 
 @section('style')
     <style>
-        /* Report Form Styles */
         .container-report {
             max-width: 600px;
             margin: 0 auto;
@@ -12,14 +10,14 @@
             background-color: #1a1c1c;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            color: #fff; /* Set default text color to white */
+            color: #fff;
         }
 
         .report-title {
             text-align: center;
             margin-bottom: 20px;
             font-family: 'Lexend Deca', sans-serif;
-            color: #fff; /* Set title color to white */
+            color: #fff;
         }
 
         .form-group {
@@ -30,7 +28,7 @@
             display: block;
             margin-bottom: 5px;
             font-family: 'Lexend Deca', sans-serif;
-            color: #fff; /* Set label text color to white */
+            color: #fff;
         }
 
         .form-control {
@@ -39,14 +37,14 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             background-color: #333;
-            color: #fff; /* Set input text color to white */
+            color: #fff;
             font-family: Arial, sans-serif;
             resize: vertical;
         }
 
         textarea.form-control {
-            min-height: 150px; /* Adjust the height as needed */
-            max-height: 300px; /* Optional: Limit the maximum height */
+            min-height: 150px;
+            max-height: 300px;
         }
 
         .btn-primary {
@@ -72,7 +70,7 @@
         }
 
         .select-wrapper:after {
-            content: "\f107"; /* FontAwesome chevron down icon */
+            content: "\f107";
             font-family: FontAwesome;
             position: absolute;
             top: 50%;
@@ -91,7 +89,7 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             background-color: #333;
-            color: #fff; /* Set select text color to white */
+            color: #fff;
             font-family: Arial, sans-serif;
             cursor: pointer;
             background-image: linear-gradient(45deg, transparent 50%, #fff 50%), linear-gradient(135deg, #fff 50%, transparent 50%);
@@ -110,9 +108,9 @@
             background-color: #fafafa;
             box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
             font-size: 18px;
-            font-family: 'Roboto', sans-serif;  /* Use any font-family you prefer */
+            font-family: 'Roboto', sans-serif;
             transition: all 0.3s ease;
-            resize: none; /* Disables resizing */
+            resize: none;
         }
 
         textarea#report-message::placeholder {
