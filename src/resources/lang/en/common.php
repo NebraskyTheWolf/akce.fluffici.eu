@@ -12,6 +12,7 @@ return [
     'outings' => 'Outings',
     'online' => 'Online Events',
     'profile' => 'Profile',
+    'home' => 'Home',
 
     'photos' => 'Uploaded Photos',
     'reports' => 'Uploaded Reports',
@@ -29,7 +30,7 @@ return [
     'login.redirecting' => 'Redirecting...',
 
     'submitted.pictures' => 'Upload Pictures',
-    'upload.pictures' => 'Select your picture and upload them to an event. By doing so, you agree to Fluffici guidelines and terms of service.',
+    'upload.pictures' => 'Select your picture and upload them to an event. By doing so, you agree to Fluffici\'s guidelines and terms of service.',
     'select.events' => 'Select the event you attended',
     'select.upload' => 'Select multiple files from your computer',
     'select.submit' => 'Upload',
@@ -62,5 +63,24 @@ return [
     'subscribe.success' => 'You subscribed to the event(s) reminder(s).',
 
     'interest' => "Follow",
-    'interest.success' => 'You have put your interest on :event you will get notified on updates.'
+    'interest.success' => 'You have put your interest on :event you will get notified on updates.',
+
+    'clipboard.copied' => 'You successfully copied the data',
+    'clipboard.error' => 'A error occurred while copying the data',
+
+    'pictures' => 'Pictures',
+    'report.content' => 'Report content',
+    'report.reviewed' => 'Reviewed',
+
+    'reporter' => 'Reporter',
+    'reason' => 'Reason',
+    'reviewed.by' => 'Reviewed by',
+    'action.taken' => 'Action taken',
+
+    'forbidden' => '403',
+    'forbidden.description' => 'You do not have the permission to access this page',
+    'not_found' => '404',
+    'not_found.description' => 'This page was moved or does not exists.',
+    'maintenance' => '500',
+    'maintenance.description' => 'A internal error occurred.'
 ];

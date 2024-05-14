@@ -14,13 +14,15 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Crypt;
 
 /*
 ===========================================
  SOFTWARE PRODUCT PROPRIETARY LICENSE
 ===========================================
 
-Fluffici z.s., IČO: 19786077, Year: 2024
+Fluffici, z.s., IČO: 19786077, Year: 2024
 
 DEVELOPER INFORMATION:
 Developer Name: Vakea
@@ -285,6 +287,7 @@ class HomeController extends Controller
         $report->username = $request->user()->name;
         $report->isLegalPurpose = false;
         $report->attachment_id = $attachment;
+        $report->reviewed = 0;
         $report->save();
 
         return redirect()->route('outings')
@@ -301,12 +304,12 @@ class HomeController extends Controller
             $subscription = $subscription->first();
 
             if ($subscription->is_subscribed == 1) {
-                $subscription->update(['is_subscribed' => false]);
+                $subscription->update(['is_subscribed' => 0]);
 
                 return redirect()->route('outings')
                     ->with('flash.info', __('common.unsubscribe.success'));
             } else {
-                $subscription->update(['is_subscribed' => true]);
+                $subscription->update(['is_subscribed' => 1]);
 
                 return redirect()->route('outings')
                     ->with('flash.info', __('common.subscribe.success'));
@@ -314,7 +317,7 @@ class HomeController extends Controller
         } else {
             $subscription = new Subscriptions();
             $subscription->user_id = $request->user()->id;
-            $subscription->is_subscribed = true;
+            $subscription->is_subscribed = 1;
             $subscription->save();
 
             return redirect()->route('outings')

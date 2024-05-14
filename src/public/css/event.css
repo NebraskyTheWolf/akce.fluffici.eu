@@ -32,6 +32,21 @@ THIS SOFTWARE PRODUCT IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS 
 /* Pictures */
 .pictures {
     margin-bottom: 20px;
+    overflow-y: auto;
+}
+
+.pictures::-webkit-scrollbar {
+    width: 8px; /* scrollbar width */
+}
+
+.pictures::-webkit-scrollbar-thumb {
+    background-color: #334141; /* scrollbar thumb color */
+    border-radius: 5px; /* scrollbar thumb border radius */
+}
+
+.pictures::-webkit-scrollbar-track {
+    background-color: #1F2937; /* scrollbar track color */
+    border-radius: 5px; /* scrollbar track border radius */
 }
 
 .pictures-header {

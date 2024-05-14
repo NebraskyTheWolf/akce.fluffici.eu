@@ -57,5 +57,25 @@ return [
     'select.event' => 'Vyberte událost',
 
     'subscribe' => 'Přihlaste se k odběru připomínek',
-    'interest' => 'Sledovat'
+    'interest' => 'Sledovat',
+
+    'interest.success' => 'Vaše zájem byl zaznamenán o :event, budete informováni o aktualizacích',
+    'clipboard.copied' => 'Data byla úspěšně zkopírována',
+    'clipboard.error' => 'Při kopírování dat došlo k chybě',
+
+    'pictures' => 'Obrázky',
+    'report.content' => 'Obsah zprávy',
+    'report.reviewed' => 'Hodnoceno',
+
+    'reporter' => 'Zpravodaj',
+    'reason' => 'Důvod',
+    'reviewed.by' => 'Hodnoceno uživatelem',
+    'action.taken' => 'Podniknutá akce',
+
+    'forbidden' => '403',
+    'forbidden.description' => 'Nemáte oprávnění k přístupu na tuto stránku',
+    'not_found' => '404',
+    'not_found.description' => 'Tato stránka byla přesunuta nebo neexistuje',
+    'maintenance' => '500',
+    'maintenance.description' => 'Došlo k interní chybě'
 ];

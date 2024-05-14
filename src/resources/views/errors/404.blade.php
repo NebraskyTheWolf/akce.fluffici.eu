@@ -1,32 +1,55 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
-        <title>404 Not Found</title>
-    </head>
-    <body style="user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-user-select: none;">
-        <div class="empty">
-            <div class="empty-header">404</div>
-            <p class="empty-title">Oops… You just found an error page</p>
-            <p class="empty-subtitle text-secondary">
-                The resource you are looking for is not found.
-            </p>
-            <div class="empty-action">
-                <a href="{{ route('outings') }}" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M5 12l14 0" />
-                        <path d="M5 12l6 6" />
-                        <path d="M5 12l6 -6" />
-                    </svg>
-                    Take me home
-                </a>
-            </div>
-        </div>
-    </body>
-</html>
+@extends('index')
+
+@section('title', __('common.not_found'))
+@section('description', __('common.not_found.description'))
+
+@section('head')
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            h1 {
+                font-size: 3em;
+                font-weight: bold;
+                color: #dc3545;
+                margin-bottom: 1em;
+            }
+
+            p {
+                font-size: 1.2em;
+                color: #6c757d;
+                margin-bottom: 2em;
+            }
+
+            a {
+                color: #ffffff;
+                background-color: #007bff;
+                border: none;
+                padding: .375rem .75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                border-radius: .25rem;
+                text-decoration: none;
+                display: inline-block;
+                transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+                &:hover {
+                    color: #ffffff;
+                    background-color: #0056b3;
+                }
+            }
+        }
+    </style>
+@endsection
+
+@section('content')
+    <div class="container mt-5">
+        <h1>{{ __('common.not_found') }}</h1>
+        <p>{{ __('common.not_found.description') }}</p>
+        <a href="{{ route('outings') }}" class="btn btn-primary">{{ __('common.home') }}</a>
+    </div>
+@endsection

@@ -3,7 +3,7 @@
  SOFTWARE PRODUCT PROPRIETARY LICENSE
 ===========================================
 
-Fluffici z.s., IČO: 19786077, Year: 2024
+Fluffici, z.s., IČO: 19786077, Year: 2024
 
 DEVELOPER INFORMATION:
 Developer Name: Vakea

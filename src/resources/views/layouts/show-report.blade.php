@@ -16,16 +16,12 @@
                         @endif
                         <p class="card-text">{{ $report->messages }}</p>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Reporter:</strong> {{ $report->username }}</li>
-                            <li class="list-group-item"><strong>Reason:</strong> {{ $report->reason }}</li>
-
-                            @if($report->isLegalPurpose === 1)
-                                <li class="list-group-item"><strong style="color: red">DMCA</strong></li>
-                            @endif
+                            <li class="list-group-item"><strong>{{ __('common.reporter') }}:</strong> {{ $report->username }}</li>
+                            <li class="list-group-item"><strong>{{ __('common.reason') }}:</strong> {{ $report->reason }}</li>
 
                             @if($report->reviewed === 1)
-                                <li class="list-group-item"><strong>Reviewed By:</strong> {{ $report->reviewed_by }}</li>
-                                <li class="list-group-item"><strong>Action taken:</strong>
+                                <li class="list-group-item"><strong>{{ __('common.reviewed.by') }}:</strong> {{ $report->reviewed_by }}</li>
+                                <li class="list-group-item"><strong>{{ __('common.action.taken') }}:</strong>
                                     {{ $report->type }}
                                 </li>
                             @endif
