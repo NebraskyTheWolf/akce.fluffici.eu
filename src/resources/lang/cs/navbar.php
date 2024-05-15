@@ -2,7 +2,7 @@
 
 return [
     'button.home' => 'Domov',
-    'button.news' => 'News',
+    'button.news' => 'Novinky',
     'button.event' => 'Akce',
     'button.shop' => 'Merch',
     'button.wiki' => 'Wiki',

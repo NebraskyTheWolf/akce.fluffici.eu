@@ -50,18 +50,22 @@ THIS SOFTWARE PRODUCT IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS 
 }
 
 .pictures-header {
-    background-color: #374040;
+    background-color: #1a1c1c;
     color: #FFFFFF;
     padding: 10px;
-    font-size: 18px;
+    font-size: x-large;
     border-radius: 10px 10px 0 0;
+    border-bottom: 30px #fff;
+
+    border-bottom-width: medium;
+    font-family: "Lexend Deca", serif;
 }
 
 .pictures-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 20px;
-    background-color: #1F2937;
+    background-color: #1a1f1f;
     border-radius: 0 0 10px 10px;
     padding: 20px;
 }
@@ -100,7 +104,7 @@ THIS SOFTWARE PRODUCT IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS 
 
 /* Event info card */
 .event-info-card {
-    background-color: #1F2937;
+    background-color: #1a1c1c;
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
@@ -114,8 +118,40 @@ THIS SOFTWARE PRODUCT IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS 
 }
 
 .event-info-title {
-    font-size: 24px;
+    font-size: x-large;
     color: #FFFFFF;
+
+    font-family: "Luckiest Guy", serif;
+    text-transform: uppercase;
+}
+
+@keyframes bellRotationLeft {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(-15deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes bellRotationRight {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(15deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.bell-icon:hover {
+    animation: bellRotationLeft 0.3s ease-in-out forwards,
+    bellRotationRight 0.3s ease-in-out 0.3s forwards;
 }
 
 .event-info-status {
@@ -126,8 +162,16 @@ THIS SOFTWARE PRODUCT IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS 
 }
 
 .event-info-details {
-    color: #CCCCCC;
+    color: #FFFFFF;
     margin-bottom: 10px;
+
+    font-size: x-large;
+
+    font-family: "Lexend Deca", serif;
+}
+
+.event-info-details svg {
+    margin-right: 4px;
 }
 
 .event-info-link {

@@ -135,14 +135,47 @@
             <div class="event-info-header">
                 <h2 class="event-info-title">{{ $event->name }}</h2>
                 <div class="event-info-status">{{ $event->status }}</div>
-                <a class="subscribe"
-                   href="{{ route('event.interest', [ 'eventId' => $event->event_id ]) }}">{{ __('common.interest') }}</a>
             </div>
-            <p class="event-info-details">{{ __('common.start.date') }}: {{ $event->startAt }}</p>
-            <p class="event-info-details">{{ __('common.end.date') }}: {{ $event->endAt }}</p>
-            <p class="event-info-details">{{ __('common.link') }}: <a href="{{ $event->link }}"
-                                                                      class="event-info-link">{{ $event->link }}</a></p>
-            <p class="event-info-details">{{ __('common.description') }}: {{ strip_tags($event->descriptions) }}</p>
+            <div class="event-info-details">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-event" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                    <path d="M16 3l0 4" />
+                    <path d="M8 3l0 4" />
+                    <path d="M4 11l16 0" />
+                    <path d="M8 15h2v2h-2z" />
+                </svg>
+                {{ __('common.start.date') }}: {{ $event->startAt }}
+            </div>
+
+            <div class="event-info-details">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-check" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
+                    <path d="M16 3v4" />
+                    <path d="M8 3v4" />
+                    <path d="M4 11h16" />
+                    <path d="M15 19l2 2l4 -4" />
+                </svg>
+                {{ __('common.end.date') }}: {{ $event->endAt }}
+            </div>
+
+            <div class="event-info-details" {{ $event->link === null ? 'hidden' : '' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-paperclip" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" />
+                </svg>
+                {{ __('common.link') }}: <a href="{{ $event->link }}" class="event-info-link">{{ $event->link }}</a>
+            </div>
+
+            <div class="event-info-details">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                </svg>
+                {{ __('common.description') }}: {{ strip_tags($event->descriptions) }}
+            </div>
         </section>
 
         @if($event->type === "PHYSICAL" && $event->map_url != null)

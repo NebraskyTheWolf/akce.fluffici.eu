@@ -148,12 +148,12 @@ class HomeController extends Controller
 
         if ($event->startAt === null && $event->begin != null) {
             $start = Carbon::parse($event->begin);
-            $event->startAt = $start->isoFormat('MMMM D, YYYY HH:mm');
+            $event->startAt = $start->isoFormat('dd MM YYYY HH:mm');
         }
 
         if ($event->endAt === null && $event->end != null) {
             $end = Carbon::parse($event->end);
-            $event->endAt = $end->isoFormat('MMMM D, YYYY HH:mm');
+            $event->endAt = $end->isoFormat('dd MM YYYY HH:mm');
         }
 
         if ($event->banner_url === null) {
