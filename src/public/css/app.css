@@ -649,8 +649,6 @@ body {
     .trello-column {
         height: initial;
     }
-
-
 }
 
 @media (max-width: 768px) {
@@ -673,7 +671,7 @@ body {
     }
 
     .developer-card {
-        background-color: #211f1f;
+        background-color: #1a1c1c;
         color: #bbb;
         padding: 5px 10px;
         border-radius: 5px;

@@ -282,7 +282,7 @@ class HomeController extends Controller
         $message = $request->input('message');
 
         $report = new ReportedAttachments();
-        $report->reason = $category . ': ' . $message;
+        $report->reason = ucwords($category) . ': ' . $message;
         $report->email = $request->user()->email;
         $report->username = $request->user()->name;
         $report->isLegalPurpose = false;

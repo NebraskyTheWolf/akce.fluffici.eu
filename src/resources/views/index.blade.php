@@ -34,6 +34,7 @@ THIS SOFTWARE PRODUCT IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap">
     <link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url('/css/event.css') }}">
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.0/dist/cookieconsent.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -89,6 +90,38 @@ THIS SOFTWARE PRODUCT IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS 
     <meta property="og:url" content="{{ url()->current() }}">
 
     @yield('head')
+
+    <script>
+        window.pusher = new Pusher('e96ac9c8809b190f796d', {
+            cluster: 'eu'
+        });
+
+        const channel = window.pusher.subscribe('notifications-event')
+        channel.bind('new-notification', function(data) {
+            const body = JSON.parse(JSON.stringify(data))
+
+            toastr.options.closeMethod = 'fadeOut';
+            toastr.options.closeDuration = 1000 * 5;
+            toastr.options.closeEasing = 'swing';
+
+            toastr.options.timeOut = 190;
+
+            toastr.options.progressBar = true;
+            toastr.options.onclick = function() {
+                window.location.href = body.url
+            }
+
+            if (body.is_cancellation) {
+                toastr.error(body.title, body.message)
+            } else {
+                toastr.info(body.title, body.message)
+            }
+
+            toastr.options.progressBar = false;
+
+            toastr.options.onclick = function () {}
+        });
+    </script>
 
     <title>@yield('title') - Fluffici</title>
 </head>
