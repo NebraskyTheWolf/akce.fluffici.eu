@@ -3,120 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Right Click Menu</title>
+    <title>Space Game</title>
     <style>
-        /* Discord-like theme */
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #36393F; /* Discord's dark background color */
-            color: #FFFFFF; /* White text color */
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
         }
-        #content {
-            padding: 20px;
-            background-color: #202225; /* Discord's darker background color */
-            border: 1px solid #3E4249; /* Discord's border color */
-            border-radius: 5px;
-            cursor: context-menu;
+        canvas {
+            display: block;
         }
-        #custom-menu {
-            display: none;
+        .info {
             position: absolute;
-            background-color: #36393F; /* Discord's dark background color */
-            border: 1px solid #3E4249; /* Discord's border color */
-            padding: 8px 0;
-            min-width: 200px;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000; /* Ensure the menu is on top of other elements */
-        }
-        .menu-item {
-            padding: 8px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .menu-item:hover {
-            background-color: #7289DA; /* Discord's primary color on hover */
-        }
-        .menu-item:hover .menu-text {
-            color: #FF0000; /* Red text color on hover */
-        }
-        .menu-item:hover .menu-icon {
-            color: #FF0000; /* Red color for icons on hover */
-        }
-        .menu-text {
-            color: inherit;
-            flex: 1;
-        }
-        .menu-icon {
-            color: inherit;
-            margin-left: 10px;
+            top: 10px;
+            left: 10px;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
-
-<!-- Content to display right-click menu on -->
-<div id="content">
-    Right-click me!
+<div class="info">
+    <div>Health: <span id="health">100</span></div>
+    <div>XP: <span id="xp">0</span></div>
 </div>
 
-<!-- Custom context menu -->
-<div id="custom-menu">
-    <div class="menu-item" id="menu-item-1">
-        <span class="menu-text">Option 1</span>
-        <span class="menu-icon">👍</span>
-    </div>
-    <div class="menu-item" id="menu-item-2">
-        <span class="menu-text">Option 2</span>
-        <span class="menu-icon">👎</span>
-    </div>
-    <div class="menu-item" id="menu-item-3">
-        <span class="menu-text">Report</span>
-        <span class="menu-icon">🚨</span>
-    </div>
-</div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
 <script>
-    // Function to display the custom context menu
-    function showContextMenu(x, y) {
-        var menu = document.getElementById("custom-menu");
-        menu.style.display = "block";
-        menu.style.left = x + "px";
-        menu.style.top = y + "px";
+    // Set up Three.js scene
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Health and XP variables
+    let health = 100;
+    let xp = 0;
+
+    // Create spaceship
+    const spaceshipTexture = new THREE.TextureLoader().load('textures/spaceship.png');
+    const spaceshipGeometry = new THREE.PlaneGeometry(1, 1);
+    const spaceshipMaterial = new THREE.MeshBasicMaterial({ map: spaceshipTexture, transparent: true });
+    const spaceship = new THREE.Mesh(spaceshipGeometry, spaceshipMaterial);
+    spaceship.position.set(0, 0, -5);
+    scene.add(spaceship);
+
+    // Set up camera position
+    camera.position.z = 0;
+
+    // Health and XP bars
+    const healthBar = document.getElementById('health');
+    const xpBar = document.getElementById('xp');
+
+    // Movement controls
+    const speed = 0.1;
+    const keys = {};
+    document.addEventListener('keydown', (event) => {
+        keys[event.code] = true;
+    });
+    document.addEventListener('keyup', (event) => {
+        keys[event.code] = false;
+    });
+
+    // Shooting controls
+    const bulletSpeed = 0.5;
+    const bullets = [];
+    document.addEventListener('click', () => {
+        const bulletGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+        const bulletMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        const bullet = new THREE.Mesh(bulletGeometry, bulletMaterial);
+        bullet.position.copy(spaceship.position);
+        bullet.direction = new THREE.Vector3(0, 0, -1).applyQuaternion(spaceship.quaternion);
+        bullets.push(bullet);
+        scene.add(bullet);
+
+        // Play shooting sound effect
+        const sound = new Howl({
+            src: ['sounds/shoot.mp3']
+        });
+        sound.play();
+    });
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+
+        // Move spaceship
+        if (keys['ArrowUp'] || keys['KeyW']) {
+            spaceship.position.y += speed;
+        }
+        if (keys['ArrowDown'] || keys['KeyS']) {
+            spaceship.position.y -= speed;
+        }
+        if (keys['ArrowLeft'] || keys['KeyA']) {
+            spaceship.position.x -= speed;
+        }
+        if (keys['ArrowRight'] || keys['KeyD']) {
+            spaceship.position.x += speed;
+        }
+
+        // Update bullets position
+        bullets.forEach(bullet => {
+            bullet.position.addScaledVector(bullet.direction, bulletSpeed);
+        });
+
+        // Remove bullets that are out of bounds
+        bullets.forEach(bullet => {
+            if (bullet.position.z < -10) {
+                scene.remove(bullet);
+                bullets.splice(bullets.indexOf(bullet), 1);
+            }
+        });
+
+        // Update health and XP bars
+        healthBar.textContent = health;
+        xpBar.textContent = xp;
+
+        // Render scene
+        renderer.render(scene, camera);
     }
-
-    // Function to hide the custom context menu
-    function hideContextMenu() {
-        var menu = document.getElementById("custom-menu");
-        menu.style.display = "none";
-    }
-
-    // Event listener to capture right-click event
-    document.addEventListener("contextmenu", function(event) {
-        event.preventDefault(); // Prevent default browser context menu
-        showContextMenu(event.pageX, event.pageY); // Show custom context menu
-    });
-
-    // Event listener to hide the custom context menu when clicking elsewhere
-    document.addEventListener("click", function(event) {
-        hideContextMenu();
-    });
-
-    // Event listeners for each menu item
-    document.getElementById("menu-item-1").addEventListener("click", function() {
-        alert("Option 1 clicked!");
-    });
-    document.getElementById("menu-item-2").addEventListener("click", function() {
-        alert("Option 2 clicked!");
-    });
-    document.getElementById("menu-item-3").addEventListener("click", function() {
-        alert("Report option clicked!");
-    });
+    animate();
 </script>
-
 </body>
 </html>

@@ -1,6 +1,8 @@
 @php use App\Models\ReportedAttachments; @endphp
 @extends('index')
 @section('title', $event->name)
+@section('image', $event->banner_url)
+@section('description', strip_tags($event->descriptions) . ' · ' . ucwords(strtolower($event->status)))
 
 @section('head')
     <style>
