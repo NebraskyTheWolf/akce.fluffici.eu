@@ -82,5 +82,8 @@ return [
     'not_found' => '404',
     'not_found.description' => 'This page was moved or does not exists.',
     'maintenance' => '500',
-    'maintenance.description' => 'A internal error occurred.'
+    'maintenance.description' => 'A internal error occurred.',
+
+    'common.upload.success' => 'All your files has been uploaded.',
+    'common.upload.error' => 'An error occurred while upload your files.',
 ];

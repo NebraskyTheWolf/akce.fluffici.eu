@@ -32,6 +32,18 @@
             }
         }
 
+        @keyframes pulseUniversal {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 46, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 46, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 46, 0);
+            }
+        }
+
         .moderation-icon {
             color: #e57373;
             font-size: 24px;
@@ -56,6 +68,84 @@
                 margin-right: auto; /* Center the element horizontally */
             }
         }
+
+        .progress-bar {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            border: 1px solid rgb(26, 28, 31);
+        }
+
+        .progress__bar {
+            display: block;
+            position: relative;
+            top: -1px;
+            left: -1px;
+            width: 0%;
+            opacity: 1;
+            border-radius: 2px 0 0 2px;
+            background-size: 100px 30px, 130px 30px, 130px 30px;
+            background-position: -20% center, right center, left center;
+            background-repeat: no-repeat, no-repeat, no-repeat;
+            transition: opacity 0.2s ease, width 0.8s ease-out, background-color 1s ease, border-color 0.3s ease, box-shadow 1s ease;
+            animation: pulseBar 2s ease-out infinite;
+            background-color: rgba(18, 135, 204, 0.95);
+            background-image: linear-gradient(90deg, rgba(20, 151, 227, 0) 10%, rgba(37, 162, 236, 0.8) 30%, #3dacee 70%, rgba(37, 162, 236, 0.8) 80%, rgba(20, 151, 227, 0) 90%), linear-gradient(to right, rgba(61, 172, 238, 0) 0%, #3dacee 100%), linear-gradient(to left, rgba(61, 172, 238, 0) 0%, #3dacee 100%);
+            border: 1px solid #54b6f0;
+            box-shadow: 0 0 0.6em #25a2ec inset, 0 0 0.4em #1497e3 inset, 0 0 0.5em rgba(18, 135, 204, 0.5), 0 0 0.1em rgba(225, 242, 252, 0.5);
+        }
+        .progress__bar:before, .progress__bar:after {
+            content: "";
+            position: absolute;
+            height: 40px;
+        }
+
+        .progress__bar--orange {
+            background-color: rgba(201, 47, 0, 0.95);
+            background-image: linear-gradient(90deg, rgba(227, 53, 0, 0) 10%, rgba(252, 59, 0, 0.8) 30%, #ff4d17 70%, rgba(252, 59, 0, 0.8) 80%, rgba(227, 53, 0, 0) 90%), linear-gradient(to right, rgba(255, 77, 23, 0) 0%, #ff4d17 100%), linear-gradient(to left, rgba(255, 77, 23, 0) 0%, #ff4d17 100%);
+            border-color: #ff6030;
+            box-shadow: 0 0 0.6em #fc3b00 inset, 0 0 0.4em #e33500 inset, 0 0 0.5em rgba(201, 47, 0, 0.5), 0 0 0.1em rgba(255, 214, 201, 0.5);
+
+            animation: pulseUniversal 2s infinite;
+        }
+        .progress__bar--yellow {
+            background-color: rgba(232, 158, 0, 0.95);
+            background-image: linear-gradient(90deg, rgba(255, 174, 3, 0) 10%, rgba(255, 183, 28, 0.8) 30%, #ffbf36 70%, rgba(255, 183, 28, 0.8) 80%, rgba(255, 174, 3, 0) 90%), linear-gradient(to right, rgba(255, 191, 54, 0) 0%, #ffbf36 100%), linear-gradient(to left, rgba(255, 191, 54, 0) 0%, #ffbf36 100%);
+            border-color: #ffc74f;
+            box-shadow: 0 0 0.6em #ffb71c inset, 0 0 0.4em #ffae03 inset, 0 0 0.5em rgba(232, 158, 0, 0.5), 0 0 0.1em rgba(255, 248, 232, 0.5);
+
+            animation: pulseUniversal 2s infinite;
+        }
+        .progress__bar--green {
+            background-color: rgba(0, 178, 23, 0.95);
+            background-image: linear-gradient(90deg, rgba(0, 204, 26, 0) 10%, rgba(0, 229, 30, 0.8) 30%, #00ff21 70%, rgba(0, 229, 30, 0.8) 80%, rgba(0, 204, 26, 0) 90%), linear-gradient(to right, rgba(0, 255, 33, 0) 0%, #00ff21 100%), linear-gradient(to left, rgba(0, 255, 33, 0) 0%, #00ff21 100%);
+            border-color: #19ff37;
+            box-shadow: 0 0 0.6em #00e51e inset, 0 0 0.4em #00cc1a inset, 0 0 0.5em rgba(0, 178, 23, 0.5), 0 0 0.1em rgba(178, 255, 188, 0.5);
+
+            animation: pulseUniversal 2s infinite;
+        }
+        .progress__bar--blue {
+            background-color: rgba(18, 135, 204, 0.95);
+            background-image: linear-gradient(90deg, rgba(20, 151, 227, 0) 10%, rgba(37, 162, 236, 0.8) 30%, #3dacee 70%, rgba(37, 162, 236, 0.8) 80%, rgba(20, 151, 227, 0) 90%), linear-gradient(to right, rgba(61, 172, 238, 0) 0%, #3dacee 100%), linear-gradient(to left, rgba(61, 172, 238, 0) 0%, #3dacee 100%);
+            border-color: #54b6f0;
+            box-shadow: 0 0 0.6em #25a2ec inset, 0 0 0.4em #1497e3 inset, 0 0 0.5em rgba(18, 135, 204, 0.5), 0 0 0.1em rgba(225, 242, 252, 0.5);
+
+            animation: pulseUniversal 2s infinite;
+        }
+
+        @keyframes pulseBar {
+            0% {
+                background-position: -50% center, right center, left center;
+            }
+            100% {
+                background-position: 150% center, right center, left center;
+            }
+        }
     </style>
 @endsection
 
@@ -66,6 +156,9 @@
         </div>
 
         <form id="upload-form" enctype="multipart/form-data">
+
+            <div id="progress-bar-container" class="progress-bar progress__bar progress__bar--blue" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
             <div class="form-group">
                 <label for="event-select">{{ __('common.select.events') }}</label>
                 <select class="form-control" id="event-select" name="event"
@@ -98,12 +191,12 @@
             <div class="moderation-text">
                 <!-- Pravidla moderace: -->
                 <!-- 1. Všechny příspěvky podléhají moderaci. -->
-                <p>Všechny příspěvky podléhají moderaci.</p>
-                <p>Není povolena NSFW obsahu.</p>
-                <p>Není povolena homophobicke obsahu.</p>
-                <p>Není povolena agresivni obsahu.</p>
-                <p>Není povolena obsahu, který zraňuje/nebo obsahuje nenávist.</p>
-                <small>Všechny NSFW obsah bude smazán a účet bude zakázán na webových stránkách / Discord serveru.</small>
+                <p>{{ __('rules.one') }}</p>
+                <p>{{ __('rules.two') }}</p>
+                <p>{{ __('rules.three') }}</p>
+                <p>{{ __('rules.four') }}</p>
+                <p>{{ __('rules.five') }}</p>
+                <small>{{ __('rules.six') }}</small>
             </div>
         </div>
     </div>
@@ -132,14 +225,23 @@
                     return;
                 @endif
 
-                let size = $('#image-upload')[0].files.length;
-                let error_count = 0;
-                let processed_count = 0;
+                const files = $('#image-upload')[0].files;
+                const totalFiles = files.length;
+                let errorCount = 0;
+                let processedCount = 0;
+
+                let broken = false
 
                 // Loop through each selected file and upload one by one
-                $.each($('#image-upload')[0].files, function (index, file) {
+                $.each(files, function (index, file) {
                     const formData = new FormData();
                     formData.append('file', file);
+
+                    if (broken)
+                        return;
+
+                    // Create progress bar for this file
+                    const progressBar = $('#progress-bar-container');
 
                     $.ajax({
                         url: 'https://autumn.fluffici.eu/photos',
@@ -147,6 +249,19 @@
                         data: formData,
                         contentType: false,
                         processData: false,
+                        xhr: function() {
+                            const xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener('progress', function(evt) {
+                                if (evt.lengthComputable) {
+                                    const datasetPercent = (processedCount * 100) / totalFiles;
+                                    const currentFilePercent = (evt.loaded * 100) / evt.total;
+                                    const percentComplete = datasetPercent + (currentFilePercent / totalFiles);
+
+                                    progressBar.css('width', percentComplete + '%');
+                                }
+                            }, false);
+                            return xhr;
+                        },
                         success: function (response) {
                             const body = new FormData();
                             body.append('attachment_id', response.id);
@@ -163,41 +278,78 @@
                                 processData: false,
                                 success: function () {
                                     console.log(`'${response.id}#${index}': batch uploaded.`);
-                                    processed_count++;
+                                    processedCount++;
                                 },
                                 error: function () {
-                                    toastr.error(`Při nahrávání indexu '${index}' došlo k chybě`);
-                                    error_count++;
-                                    processed_count++;
+                                    toastr.error(`{{ __('common.upload.error') }}`);
+                                    errorCount++;
+                                    processedCount++;
+
+                                    broken = true
+                                    progressBar.removeClass('.progress__bar--blue').addClass('progress__bar--orange')
                                 },
                                 complete: function() {
-                                    completeHandler(size, error_count, processed_count);
+                                    completeHandler(totalFiles, errorCount, processedCount);
                                 },
                             });
                         },
-                        error: function () {
-                            toastr.error(`Při nahrávání indexu '${index}' došlo k chybě`);
-                            error_count++;
-                            processed_count++;
+                        error: function (result) {
+                            errorCount++;
+                            processedCount++;
 
-                            completeHandler(size, error_count, processed_count);
+                            broken = true
+                            progressBar.removeClass('.progress__bar--blue').addClass('progress__bar--orange')
+
+                            openErrorModal(result)
                         },
                     });
                 });
             });
 
-            function completeHandler(size, error_count, processed_count) {
-                if (processed_count === size) {
-                    if (error_count === 0) {
-                        toastr.success(`Všechny soubory byly úspěšně nahrány`);
+            function completeHandler(totalFiles, errorCount, processedCount) {
+                if (processedCount === totalFiles) {
+                    if (errorCount === 0) {
+                        //Všechny soubory byly úspěšně nahrány
+                        toastr.success(`{{ __('common.upload.success') }}`);
                     } else {
-                        toastr.error(`${error_count} souborů se nepodařilo nahrát`);
-                        console.log(`${error_count} files failed to upload.`);
+                        toastr.error(`{{ __('common.upload.error') }}`);
+                        console.log(`${errorCount} files failed to upload.`);
                     }
                     $('#image-upload').val('');
                 }
 
-                window.location.href = '{{ env('PUBLIC_URL') }}'
+                setTimeout(() => {
+                    window.location.href = '{{ env('PUBLIC_URL') }}'
+                }, 100 * 5)
+            }
+
+            // Function to open error modal with message
+            function openErrorModal(message) {
+                toastr.error(getMessageFromError(message));
+            }
+
+            function getMessageFromError(result) {
+                if (result.type === "Malware") {
+                    return '{{ __('autumn.malware') }}'
+                } else if (result.type === "S3Error") {
+                    return '{{ __('autumn.aws_error') }}'
+                } else if (result.type === "DatabaseError") {
+                    return '{{ __('autumn.database_error') }}'
+                } else if (result.type === "FileTypeNotAllowed") {
+                    return '{{ __('autumn.not_allowed') }}'
+                } else if (result.type === "UnknownTag") {
+                    return '{{ __('autumn.unknown_tag') }}'
+                } else if (result.type === "MissingData") {
+                    return '{{ __('autumn.missing_data') }}'
+                } else if (result.type === "FailedToReceive") {
+                    return '{{ __('autumn.failed_to_receive') }}'
+                } else if (result.type === "FileTooLarge") {
+                    return '{{ __('autumn.file_too_large') }}'
+                } else if (result.type === "BlockingError") {
+                    return '{{ __('autumn.nsfw') }}'
+                } else {
+                    return '{{ __('autumn.unknown') }}'
+                }
             }
         });
     </script>

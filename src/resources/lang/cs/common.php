@@ -77,5 +77,8 @@ return [
     'not_found' => '404',
     'not_found.description' => 'Ztratili jsme se, viď? Tato stránka byla přesunuta nebo neexistuje.',
     'maintenance' => '500',
-    'maintenance.description' => 'Kolo se nám polámalo... Došlo k interní chybě.'
+    'maintenance.description' => 'Kolo se nám polámalo... Došlo k interní chybě.',
+
+    'common.upload.success' => 'Všechny vaše soubory byly nahrány úspěšně.',
+    'common.upload.error' => 'Při nahrávání vašich souborů došlo k chybě.',
 ];
