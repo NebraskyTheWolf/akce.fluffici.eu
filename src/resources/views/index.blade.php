@@ -100,10 +100,10 @@
             const body = JSON.parse(JSON.stringify(data))
 
             toastr.options.closeMethod = 'fadeOut';
-            toastr.options.closeDuration = 1000 * 5;
+            toastr.options.closeDuration = 1000 * 15;
             toastr.options.closeEasing = 'swing';
 
-            toastr.options.timeOut = 190;
+            toastr.options.timeOut = 1000 * 15;
 
             toastr.options.progressBar = true;
             toastr.options.onclick = function() {
