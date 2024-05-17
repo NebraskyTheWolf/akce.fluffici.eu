@@ -33,7 +33,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap">
     <link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url('/css/event.css') }}">
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.0/dist/cookieconsent.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -88,8 +87,8 @@
 
     <meta property="og:url" content="{{ url()->current() }}">
 
-    @yield('head')
 
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script>
         window.pusher = new Pusher('e96ac9c8809b190f796d', {
             cluster: 'eu'
@@ -121,6 +120,8 @@
             toastr.options.onclick = function () {}
         });
     </script>
+
+    @yield('head')
 
     <title>@yield('title') - Fluffici</title>
 </head>

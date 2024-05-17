@@ -77,12 +77,8 @@
 
 @section('head')
     <script>
-        // subscribers to a Pusher channel called 'notifications-event'
         const channel = window.pusher.subscribe('notifications-event');
-
-        // bind a function that will be triggered everytime an 'update-trello' event is received on this channel
         channel.bind('update-trello', function(data) {
-
             // parse the received data as JSON
             const body = JSON.parse(JSON.stringify(data));
 
@@ -94,6 +90,26 @@
 
             // add the previously cloned element at the end of the HTML element with an ID matching `body.status`
             $(`#${body.status}`).append(oldEvent);
+        });
+
+        channel.bind('remove-trello', function(data) {
+            const body = JSON.parse(JSON.stringify(data));
+            $(`#${body.event}`).remove()
+        });
+
+        channel.bind('create-trello', function(data) {
+            const body = JSON.parse(JSON.stringify(data));
+
+            $(`#incoming`).append(`
+                    <a id="${body.event}" href="https://akce.fluffici.eu/event?id=${body.event}">
+                            <div class="trello-card">
+                                <img src="${body.thumbnail}" alt="${body.event}" ${body.thumbnail  === "none" ? 'hidden' : '' }>
+                                <div class="card-title">${body.name}</div>
+                                <div class="card-description">${body.description}</div>
+                                <div class="card-date-time">${body.time}</div>
+                            </div>
+                    </a>
+            `)
         });
     </script>
 @endsection
