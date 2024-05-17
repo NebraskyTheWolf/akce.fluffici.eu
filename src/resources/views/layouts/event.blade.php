@@ -4,131 +4,6 @@
 @section('image', $event->banner_url)
 @section('description', strip_tags($event->descriptions) . ' · ' . ucwords(strtolower($event->status)))
 
-@section('head')
-    <style>
-        .author-info {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .author-avatar img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-        }
-
-        .author-details p {
-            margin: 0;
-            font-size: 16px;
-            color: #fff;
-        }
-
-        .dropdown {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 120px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        #custom-menu {
-            display: none;
-            position: absolute;
-            background-color: #202225; /* Discord's darker background color */
-            border: 1px solid #3E4249; /* Discord's border color */
-            padding: 8px 0;
-            min-width: 120px;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000; /* Ensure the menu is on top of other elements */
-        }
-
-        .menu-item {
-            padding: 8px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .menu-item:hover {
-            background-color: #7289DA; /* Discord's primary color on hover */
-        }
-
-        .spoiler {
-            position: relative;
-            display: inline-block;
-        }
-
-        .spoiler img {
-            filter: blur(80%) grayscale(50%);
-        }
-
-        /* Removing the blur and effect on hover! */
-        .spoiler img:hover {
-            filter: initial;
-        }
-
-        .spoiler .alert-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(26, 26, 26, 0.65);
-            opacity: 1;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .spoiler:hover .alert-overlay {
-            opacity: 0;
-            pointer-events: all;
-        }
-
-        .alert-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            text-align: center;
-        }
-
-        @keyframes fadeOutAnimation {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-    </style>
-@endsection
-
 @section('content')
     <section class="container-event">
         <img src="{{ $event->banner_url }}" alt="Event Banner" class="event-banner">
@@ -181,6 +56,19 @@
         </section>
 
         @if($event->type === "PHYSICAL" && $event->map_url != null)
+            <section class="pictures">
+                <h3 class="pictures-header">Mapa</h3>
+                <div class="pictures-gallery">
+                    <iframe id="map"
+                        src="https://maps.google.com/maps?q={{ $latitude }},{{ $longitude }}&hl=cs;z=4&amp;output=embed"
+                        width="800"
+                        height="400"
+                        frameborder="0"
+                        style="border:0" allowfullscreen>
+                    </iframe>
+                </div>
+            </section>
+
             <section class="pictures">
                 <h3 class="pictures-header">{{ __('common.location') }}</h3>
                 <div class="pictures-gallery">

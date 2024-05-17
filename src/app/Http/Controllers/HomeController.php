@@ -145,12 +145,12 @@ class HomeController extends Controller
 
         if ($event->startAt === null && $event->begin != null) {
             $start = Carbon::parse($event->begin);
-            $event->startAt = $start->isoFormat('dd MM YYYY HH:mm');
+            $event->startAt = $start->isoFormat('dddd, D. MMMM YYYY | HH:mm');
         }
 
         if ($event->endAt === null && $event->end != null) {
             $end = Carbon::parse($event->end);
-            $event->endAt = $end->isoFormat('dd MM YYYY HH:mm');
+            $event->endAt = $end->isoFormat('dddd, D. MMMM YYYY | HH:mm');
         }
 
         if ($event->banner_url === null) {
@@ -160,6 +160,16 @@ class HomeController extends Controller
         if ($event->map_url === null && $event->map_id != null) {
             $event->map_url = "https://autumn.fluffici.eu/attachments/{$event->map_id}?width=620&height=300";
         }
+
+        $description = $event->descriptions;
+        $pattern = '/(http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/';
+        $replacement = '<a href="$0">$0</a>';
+        $descriptionWithLinks = preg_replace($pattern, $replacement, $description);
+        $event->descriptions = $descriptionWithLinks;
+
+        $map = json_decode($event->min, true);
+        $latitude = $map['lat'];
+        $longitude = $map['lng'];
 
         $pictures = EventAttachments::where('event_id', $event->event_id)
             ->orderBy('created_at', 'desc')
@@ -179,7 +189,9 @@ class HomeController extends Controller
 
         return view('layouts.event', compact(
             'event',
-            'pictures'
+            'pictures',
+            'latitude',
+            'longitude'
         ));
     }
 

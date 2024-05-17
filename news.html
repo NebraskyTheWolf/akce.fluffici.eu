@@ -1,131 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Game</title>
+    <title>Simple Map</title>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #000;
-        }
-        canvas {
-            display: block;
-        }
-        .info {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            z-index: 1;
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
         }
     </style>
 </head>
 <body>
-<div class="info">
-    <div>Health: <span id="health">100</span></div>
-    <div>XP: <span id="xp">0</span></div>
-</div>
+<h3>My Google Maps Demo</h3>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
-<script>
-    // Set up Three.js scene
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    // Health and XP variables
-    let health = 100;
-    let xp = 0;
-
-    // Create spaceship
-    const spaceshipTexture = new THREE.TextureLoader().load('textures/spaceship.png');
-    const spaceshipGeometry = new THREE.PlaneGeometry(1, 1);
-    const spaceshipMaterial = new THREE.MeshBasicMaterial({ map: spaceshipTexture, transparent: true });
-    const spaceship = new THREE.Mesh(spaceshipGeometry, spaceshipMaterial);
-    spaceship.position.set(0, 0, -5);
-    scene.add(spaceship);
-
-    // Set up camera position
-    camera.position.z = 0;
-
-    // Health and XP bars
-    const healthBar = document.getElementById('health');
-    const xpBar = document.getElementById('xp');
-
-    // Movement controls
-    const speed = 0.1;
-    const keys = {};
-    document.addEventListener('keydown', (event) => {
-        keys[event.code] = true;
-    });
-    document.addEventListener('keyup', (event) => {
-        keys[event.code] = false;
-    });
-
-    // Shooting controls
-    const bulletSpeed = 0.5;
-    const bullets = [];
-    document.addEventListener('click', () => {
-        const bulletGeometry = new THREE.SphereGeometry(0.05, 8, 8);
-        const bulletMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-        const bullet = new THREE.Mesh(bulletGeometry, bulletMaterial);
-        bullet.position.copy(spaceship.position);
-        bullet.direction = new THREE.Vector3(0, 0, -1).applyQuaternion(spaceship.quaternion);
-        bullets.push(bullet);
-        scene.add(bullet);
-
-        // Play shooting sound effect
-        const sound = new Howl({
-            src: ['sounds/shoot.mp3']
-        });
-        sound.play();
-    });
-
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-
-        // Move spaceship
-        if (keys['ArrowUp'] || keys['KeyW']) {
-            spaceship.position.y += speed;
-        }
-        if (keys['ArrowDown'] || keys['KeyS']) {
-            spaceship.position.y -= speed;
-        }
-        if (keys['ArrowLeft'] || keys['KeyA']) {
-            spaceship.position.x -= speed;
-        }
-        if (keys['ArrowRight'] || keys['KeyD']) {
-            spaceship.position.x += speed;
-        }
-
-        // Update bullets position
-        bullets.forEach(bullet => {
-            bullet.position.addScaledVector(bullet.direction, bulletSpeed);
-        });
-
-        // Remove bullets that are out of bounds
-        bullets.forEach(bullet => {
-            if (bullet.position.z < -10) {
-                scene.remove(bullet);
-                bullets.splice(bullets.indexOf(bullet), 1);
-            }
-        });
-
-        // Update health and XP bars
-        healthBar.textContent = health;
-        xpBar.textContent = xp;
-
-        // Render scene
-        renderer.render(scene, camera);
-    }
-    animate();
-</script>
+<iframe src="https://maps.google.com/maps?q=34.0522,-118.2437&hl=cs;z=14&amp;output=embed" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 </body>
 </html>
