@@ -1,7 +1,7 @@
 @php use App\Models\Subscriptions;use Illuminate\Support\Facades\Auth; @endphp
 <aside class="sidebar">
     <div class="sidebar-header">
-        <a href="https://akce.fluffici.eu"><img
+        <a href="https://fluffici.eu"><img
                 src="https://autumn.fluffici.eu/attachments/eI0QemKZhF6W9EYnDl5JcBGYGvPiIxjPzvrDY_9Klk" alt="header"
                 width="210" class="sidebar-brand"></a>
     </div>
