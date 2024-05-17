@@ -94,8 +94,8 @@
             cluster: 'eu'
         });
 
-        const channel = window.pusher.subscribe('notifications-event')
-        channel.bind('new-notification', function(data) {
+        window.channel = window.pusher.subscribe('notifications-event')
+        window.channel.bind('new-notification', function(data) {
             const body = JSON.parse(JSON.stringify(data))
 
             toastr.options.closeMethod = 'fadeOut';

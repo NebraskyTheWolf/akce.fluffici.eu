@@ -3,82 +3,75 @@
 
 @section('content')
     <section class="trello-board">
-        @if($incoming->isEmpty() && $started->isEmpty() && $finished->isEmpty() && $cancelled->isEmpty())
-            <div class="header">
-                <h3><i class="fas fa-spinner fa-spin"></i>{{ __('common.no_events') }}</h3>
+        <div class="trello-column">
+            <h3>{{ __('common.incoming') }}</h3>
+            <div id="incoming" class="trello-column-content">
+                @foreach($incoming as $event)
+                    <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
+                        <div class="trello-card">
+                            <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
+                            <div class="card-title">{{ $event->name }}</div>
+                            <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
+                            <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
+                        </div>
+                    </a>
+                @endforeach
             </div>
-        @else
-            <div class="trello-column">
-                <h3>{{ __('common.incoming') }}</h3>
-                <div id="incoming" class="trello-column-content">
-                    @foreach($incoming as $event)
-                        <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
-                            <div class="trello-card">
-                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
-                                <div class="card-title">{{ $event->name }}</div>
-                                <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
-                                <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
-            </div>
+        </div>
 
-            <div class="trello-column">
-                <h3>{{ __('common.started') }}</h3>
-                <div id="started" class="trello-column-content">
-                    @foreach($started as $event)
-                        <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
-                            <div class="trello-card">
-                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
-                                <div class="card-title">{{ $event->name }}</div>
-                                <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
-                                <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
+        <div class="trello-column">
+            <h3>{{ __('common.started') }}</h3>
+            <div id="started" class="trello-column-content">
+                @foreach($started as $event)
+                    <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
+                        <div class="trello-card">
+                            <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
+                            <div class="card-title">{{ $event->name }}</div>
+                            <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
+                            <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
+                        </div>
+                    </a>
+                @endforeach
             </div>
+        </div>
 
-            <div id="ended" class="trello-column">
-                <h3>{{ __('common.finished') }}</h3>
-                <div class="trello-column-content">
-                    @foreach($finished as $event)
-                        <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
-                            <div class="trello-card">
-                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
-                                <div class="card-title">{{ $event->name }}</div>
-                                <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
-                                <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
+        <div id="ended" class="trello-column">
+            <h3>{{ __('common.finished') }}</h3>
+            <div class="trello-column-content">
+                @foreach($finished as $event)
+                    <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
+                        <div class="trello-card">
+                            <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
+                            <div class="card-title">{{ $event->name }}</div>
+                            <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
+                            <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
+                        </div>
+                    </a>
+                @endforeach
             </div>
+        </div>
 
-            <div id="cancelled" class="trello-column">
-                <h3>{{ __('common.cancelled') }}</h3>
-                <div class="trello-column-content">
-                    @foreach($cancelled as $event)
-                        <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
-                            <div class="trello-card">
-                                <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
-                                <div class="card-title">{{ $event->name }}</div>
-                                <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
-                                <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
+        <div id="cancelled" class="trello-column">
+            <h3>{{ __('common.cancelled') }}</h3>
+            <div class="trello-column-content">
+                @foreach($cancelled as $event)
+                    <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
+                        <div class="trello-card">
+                            <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
+                            <div class="card-title">{{ $event->name }}</div>
+                            <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
+                            <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
+                        </div>
+                    </a>
+                @endforeach
             </div>
-        @endif
+        </div>
     </section>
 @endsection
 
 @section('head')
     <script>
-        const channel = window.pusher.subscribe('notifications-event');
-        channel.bind('update-trello', function(data) {
+        window.channel.bind('update-trello', function(data) {
             // parse the received data as JSON
             const body = JSON.parse(JSON.stringify(data));
 
@@ -92,12 +85,12 @@
             $(`#${body.status}`).append(oldEvent);
         });
 
-        channel.bind('remove-trello', function(data) {
+        window.channel.bind('remove-trello', function(data) {
             const body = JSON.parse(JSON.stringify(data));
             $(`#${body.event}`).remove()
         });
 
-        channel.bind('create-trello', function(data) {
+        window.channel.bind('create-trello', function(data) {
             const body = JSON.parse(JSON.stringify(data));
 
             $(`#incoming`).append(`
