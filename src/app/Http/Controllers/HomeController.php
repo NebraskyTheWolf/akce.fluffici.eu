@@ -379,27 +379,23 @@ class HomeController extends Controller
             $event->thumbnail = "none";
         }
 
+        $description = $event->descriptions;
+        $pattern = '#\[([^]]+)]\((https?://\S+)\)#';
+
+        $callback = function($matches) {
+            $title = $matches[1];
+            $url = $matches[2];
+
+            return '<a href="' . $url . '" style="color: blue; text-decoration: underline;">' . htmlspecialchars(strip_tags($title)) . '</a>';
+        };
+
+        $descriptionWithLinks = preg_replace_callback($pattern, $callback, $description);
+        $event->descriptions = $descriptionWithLinks;
+
         if ($event->startAt === null && $event->begin != null) {
             $start = Carbon::parse($event->begin);
             $event->startAt = $start->isoFormat('MMMM D, YYYY');
             $event->startAtTime = $start->isoFormat('HH:mm');
         }
-    }
-
-    function replaceMarkdownLinksWithAnchors($text): array|string|null
-    {
-        // Regular expression to match Markdown-style links [TITLE](link)
-        $markdownPattern = '/\[(.*?)\]\((https?:\/\/[^\s]+)\)/';
-
-        // Callback function to replace Markdown links with HTML anchor tags
-        $callback = function($matches) {
-            $title = $matches[1];
-            $url = $matches[2];
-            // Return the HTML anchor tag
-            return '<a href="' . $url . '">' . htmlspecialchars($title) . '</a>';
-        };
-
-        // Perform the replacement
-        return preg_replace_callback($markdownPattern, $callback, $text);
     }
 }
