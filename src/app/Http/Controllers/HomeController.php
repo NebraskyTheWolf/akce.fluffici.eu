@@ -162,9 +162,16 @@ class HomeController extends Controller
         }
 
         $description = $event->descriptions;
-        $pattern = '/(http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/';
-        $replacement = '<a href="$0">$0</a>';
-        $descriptionWithLinks = preg_replace($pattern, $replacement, $description);
+        $pattern = '#\[([^]]+)]\((https?://\S+)\)#';
+
+        $callback = function($matches) {
+            $title = $matches[1];
+            $url = $matches[2];
+
+            return '<a href="' . $url . '">' . htmlspecialchars(strip_tags($title)) . '</a>';
+        };
+
+        $descriptionWithLinks = preg_replace_callback($pattern, $callback, $description);
         $event->descriptions = $descriptionWithLinks;
 
         $map = json_decode($event->min, true);
@@ -377,5 +384,22 @@ class HomeController extends Controller
             $event->startAt = $start->isoFormat('MMMM D, YYYY');
             $event->startAtTime = $start->isoFormat('HH:mm');
         }
+    }
+
+    function replaceMarkdownLinksWithAnchors($text): array|string|null
+    {
+        // Regular expression to match Markdown-style links [TITLE](link)
+        $markdownPattern = '/\[(.*?)\]\((https?:\/\/[^\s]+)\)/';
+
+        // Callback function to replace Markdown links with HTML anchor tags
+        $callback = function($matches) {
+            $title = $matches[1];
+            $url = $matches[2];
+            // Return the HTML anchor tag
+            return '<a href="' . $url . '">' . htmlspecialchars($title) . '</a>';
+        };
+
+        // Perform the replacement
+        return preg_replace_callback($markdownPattern, $callback, $text);
     }
 }
