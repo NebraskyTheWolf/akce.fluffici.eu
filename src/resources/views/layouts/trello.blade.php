@@ -11,7 +11,7 @@
                         <div class="trello-card">
                             <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
                             <div class="card-title">{{ $event->name }}</div>
-                            <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
+                            <div class="card-description">{!! $event->descriptions !!}</div>
                             <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
                         </div>
                     </a>
@@ -27,7 +27,7 @@
                         <div class="trello-card">
                             <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
                             <div class="card-title">{{ $event->name }}</div>
-                            <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
+                            <div class="card-description">{!! $event->descriptions !!}</div>
                             <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
                         </div>
                     </a>
@@ -43,7 +43,7 @@
                         <div class="trello-card">
                             <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
                             <div class="card-title">{{ $event->name }}</div>
-                            <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
+                            <div class="card-description">{!! $event->descriptions !!}</div>
                             <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
                         </div>
                     </a>
@@ -59,7 +59,7 @@
                         <div class="trello-card">
                             <img src="{{ $event->thumbnail }}" alt="{{ $event->event_id }}" {{ $event->thumbnail === "none" ? 'hidden' : ''}}>
                             <div class="card-title">{{ $event->name }}</div>
-                            <div class="card-description">{{ strip_tags($event->descriptions) }}</div>
+                            <div class="card-description">{!! $event->descriptions !!}</div>
                             <div class="card-date-time">{{ __('common.date') }}: {{ $event->startAt }} - {{ __('common.time') }}: {{ $event->startAtTime }}</div>
                         </div>
                     </a>
