@@ -34,8 +34,7 @@
                 <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}&background=0D8ABC&color=fff"
                      alt="Profile Picture" width="50">
             @else
-                <img src="https://autumn.fluffici.eu/avatars/{{ Auth::user()->avatar_id }}" alt="Profile Picture"
-                     width="50">
+                <img src="https://autumn.fluffici.eu/avatars/{{ Auth::user()->avatar_id }}?width=50&height=50" alt="Profile Picture">
             @endif
 
             <p style="color: #fff">{{ Auth::user()->name }}</p>
