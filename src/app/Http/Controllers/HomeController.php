@@ -168,7 +168,7 @@ class HomeController extends Controller
             $title = $matches[1];
             $url = $matches[2];
 
-            return '<a href="' . $url . '">' . htmlspecialchars(strip_tags($title)) . '</a>';
+            return '<a href="' . $url . '" style="color: blue; text-decoration: underline;">' . htmlspecialchars(strip_tags($title)) . '</a>';
         };
 
         $descriptionWithLinks = preg_replace_callback($pattern, $callback, $description);
