@@ -9,10 +9,44 @@
             width: 100%; /* The width is the width of the web page */
         }
     </style>
+
+    <script src="https://js.pusher.com/8.2.0/pusher.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
+            integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        window.pusher = new Pusher('ec3d3b974cc54f99abc5', {
+            VERSION: "8.2.0",
+            PROTOCOL: 7,
+            useTLS: false,
+            wsPort: 6001,
+            httpHost: '185.188.249.234',
+            wsHost: '185.188.249.234',
+            httpPort: 6001,
+            httpPath: '/pusher',
+            userAuthentication: {
+                endpoint: '/pusher/user-auth',
+                transport: 'ajax'
+            },
+            channelAuthorization: {
+                endpoint: '/pusher/auth',
+                transport: 'ajax'
+            },
+            cluster: 'eu',
+
+            forceTLS: false,
+            encrypted: true,
+            disableStats: true,
+            enabledTransports: ['ws', 'wss']
+        });
+
+        window.channel = window.pusher.subscribe('notifications-event')
+        window.channel.bind('new-notification', function(data) {
+            $('#uwu').append('<p>Packet received uwu</p>')
+        });
+    </script>
 </head>
 <body>
-<h3>My Google Maps Demo</h3>
-
-<iframe src="https://maps.google.com/maps?q=34.0522,-118.2437&hl=cs;z=14&amp;output=embed" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <div id="uwu"></div>
 </body>
 </html>

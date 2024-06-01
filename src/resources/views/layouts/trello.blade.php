@@ -35,9 +35,9 @@
             </div>
         </div>
 
-        <div id="ended" class="trello-column">
+        <div class="trello-column">
             <h3>{{ __('common.finished') }}</h3>
-            <div class="trello-column-content">
+            <div id="ended" class="trello-column-content">
                 @foreach($finished as $event)
                     <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
                         <div class="trello-card">
@@ -51,9 +51,9 @@
             </div>
         </div>
 
-        <div id="cancelled" class="trello-column">
+        <div class="trello-column">
             <h3>{{ __('common.cancelled') }}</h3>
-            <div class="trello-column-content">
+            <div id="cancelled" class="trello-column-content">
                 @foreach($cancelled as $event)
                     <a id="{{ $event->event_id }}" href="{{ env('PUBLIC_URL') }}/event?id={{ $event->event_id }}">
                         <div class="trello-card">
