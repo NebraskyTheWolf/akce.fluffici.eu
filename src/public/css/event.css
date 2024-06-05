@@ -505,3 +505,41 @@ body {
         filter: blur(70%) grayscale(40%);
     }
 }
+
+.blog-editor {
+    border: 1px solid #000;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #1a1f1f;
+}
+
+.blog-editor p {
+    font-weight: bold;
+}
+
+.description-content {
+    margin-top: 10px;
+    color: #333;
+    font-size: 16px;
+}
+
+
+@media (max-width: 480px) {
+    .blog-editor {
+        padding: 10px;
+    }
+
+    .description-content {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .blog-editor {
+        padding: 15px;
+    }
+
+    .description-content {
+        font-size: 16px;
+    }
+}

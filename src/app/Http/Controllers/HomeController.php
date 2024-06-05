@@ -390,7 +390,13 @@ class HomeController extends Controller
         };
 
         $descriptionWithLinks = preg_replace_callback($pattern, $callback, $description);
-        $event->descriptions = $descriptionWithLinks;
+
+        if (strlen($descriptionWithLinks) > 300) {
+            $event->descriptions = substr($descriptionWithLinks, 0, 300);
+            $event->descriptions .= '  <span style="font-family: Arial, sans-serif; font-size: 16px; color: #FF002E; font-weight: bold;"> ≫ Číst dále...</span>';
+        } else {
+            $event->descriptions = $descriptionWithLinks;
+        }
 
         if ($event->startAt === null && $event->begin != null) {
             $start = Carbon::parse($event->begin);
