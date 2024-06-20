@@ -364,6 +364,19 @@ class HomeController extends Controller
             ->with('flash.success', __('common.interest.success'));
     }
 
+    public function linkAccount(Request $request) {
+        if (Auth::guest()) {
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
+        }
+
+        $discord = [];
+        $discord['status'] = 'unlinked';
+
+        $telegram = [];
+        $telegram['status'] = 'unlinked';
+
+        return view('layouts.link-account', compact('discord', 'telegram'));
+    }
 
     public function logout(Request $request): RedirectResponse {
         $request->session()->flush();

@@ -77,4 +77,6 @@ RUN <<EOF
   rm -rf /var/lib/apt/lists/*
 EOF
 
+RUN composer install -q --no-interaction
+
 RUN docker-php-ext-install mysqli pdo pdo_mysql

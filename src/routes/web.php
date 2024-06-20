@@ -42,6 +42,9 @@ Route::get('/subscribes', [HomeController::class, 'subscribeNotification'])
 Route::get('/event/{eventId}/mark-interest', [HomeController::class, 'markInterested'])
     ->name('event.interest');
 
+Route::get('/link-account', [HomeController::class, 'linkAccount'])
+    ->name('link-account');
+
 Route::get('/logout', [HomeController::class, 'logout'])
     ->name('profile.logout');
 
