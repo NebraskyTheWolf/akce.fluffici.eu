@@ -45,6 +45,9 @@ Route::get('/event/{eventId}/mark-interest', [HomeController::class, 'markIntere
 Route::get('/link-account', [HomeController::class, 'linkAccount'])
     ->name('link-account');
 
+Route::post('/link-telegram', [HomeController::class, 'linkTelegram'])
+    ->name('link-telegram');
+
 Route::get('/logout', [HomeController::class, 'logout'])
     ->name('profile.logout');
 

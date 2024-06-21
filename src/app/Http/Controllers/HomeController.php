@@ -6,6 +6,8 @@ use App\Models\Events;
 use App\Models\EventsInteresteds;
 use App\Models\ReportedAttachments;
 use App\Models\Subscriptions;
+use App\Models\TelegramVerification;
+use App\Models\TelegramVerified;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
@@ -16,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\ValidationException;
 
 /*
                             LICENCE PRO PROPRIETÁRNÍ SOFTWARE
@@ -370,12 +373,42 @@ class HomeController extends Controller
         }
 
         $discord = [];
-        $discord['status'] = 'unlinked';
+        $discord['status'] = $request->user()->discord_linked == 1 ? 'linked' : 'unlinked';
+        $discord['username'] = $request->user()->username;
+
+        $verification = TelegramVerified::where('fluffici_id', $request->user()->id);
+
 
         $telegram = [];
-        $telegram['status'] = 'unlinked';
+        $telegram['status'] = $verification->exists() ? 'linked' : 'unlinked';
+        $telegram['username'] = $verification->username;
 
         return view('layouts.link-account', compact('discord', 'telegram'));
+    }
+
+    public function linkTelegram(Request $request) {
+        if (Auth::guest()) {
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
+        }
+
+        $verification = TelegramVerification::where('verification_code', $request->input('verification_code'));
+
+        if ($verification->exists()) {
+            $verification->status = 'VERIFIED';
+            $verification->save();
+
+            $verifiedUser = new TelegramVerified();
+            $verifiedUser->user_id = $verification->user_id;
+            $verifiedUser->username = $verification->username;
+            $verifiedUser->fluffici_id = $request->user()->id;
+            $verifiedUser->save();
+
+            return redirect()->route('link-account');
+        } else {
+            return throw ValidationException::withMessages([
+                'verification_code' => __('common.verification_code.invalid'),
+            ]);
+        }
     }
 
     public function logout(Request $request): RedirectResponse {
