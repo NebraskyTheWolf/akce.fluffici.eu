@@ -377,6 +377,8 @@ class HomeController extends Controller
         if ($request->user()->discord_linked == 1) {
             $discord['status'] = $this->isDBVerified($request->user()->discord_id) ? 'linked' : 'linked-unverified';
             $discord['username'] = $request->user()->username;
+        } else {
+            $discord['status'] = 'unlinked';
         }
 
         $verification = TelegramVerified::where('fluffici_id', $request->user()->id);
