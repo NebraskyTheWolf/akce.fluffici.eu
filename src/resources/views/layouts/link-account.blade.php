@@ -291,7 +291,7 @@
                     <p>{{ __('common.discord.unlinked') }}</p>
                 @endif
             </a>
-            <a id="telegram-{{ $telegram['status'] }}" class="platform telegram {{ $telegram['status'] }}" href="{{ $telegram['status'] == 'linked' ? 'https://akce.fluffici.eu/unlink-telegram' : '' }}">
+            <div id="telegram-{{ $telegram['status'] }}" class="platform telegram {{ $telegram['status'] }}">
                 <div class="dot {{ $telegram['status'] }}"></div>
                 <img src="{{ url('/img/telegram.png') }}" alt="Telegram" style="width: 108px;height: 108px;margin: auto;">
                 <h2>Telegram</h2>
@@ -300,7 +300,7 @@
                 @else
                     <p>{{ __('common.telegram.unlinked') }}</p>
                 @endif
-            </a>
+            </div>
         </div>
 
         <div class="form-container" hidden="">
@@ -331,6 +331,10 @@
                 $('.form-container').show();
 
                 $('#title').text('{{ __('common.telegram.setup') }}');
+            });
+
+            $('#telegram-linked').click(function () {
+               window.location.href = 'https://akce.fluffici.eu/unlink-telegram'
             });
 
             @if ($errors->any())
