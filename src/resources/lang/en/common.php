@@ -84,6 +84,16 @@ return [
     'maintenance' => '500',
     'maintenance.description' => 'A internal error occurred.',
 
-    'common.upload.success' => 'All your files has been uploaded.',
-    'common.upload.error' => 'An error occurred while upload your files.',
+    'upload.success' => 'All your files has been uploaded.',
+    'upload.error' => 'An error occurred while upload your files.',
+
+    'title.link-account' => 'Link your account(s)',
+    'link-account.title' => 'Select the platform your want to link',
+    'discord.unlinked' => 'You have not linked your discord account yet',
+    'linked.unverified' => 'Your discord account is linked, but you are not verified on our Discord server.',
+    'telegram.unlinked' => 'You have not linked your telegram account yet',
+    'verification_code' => 'Enter your verification code',
+    'telegram.setup' => 'Setting up telegram',
+    'help.telegram.verification_code' => '<strong>Step 1:</strong> Go on Telegram.<br><strong>Step 2:</strong> Search for the bot <strong>@Fluffici_bot</strong>, use the command <strong>/start</strong>.<br><strong>Step 3:</strong> Copy/paste the verification code in the form and click on <strong>Next</strong>.'
+
 ];

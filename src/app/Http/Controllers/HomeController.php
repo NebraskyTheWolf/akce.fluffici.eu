@@ -373,16 +373,23 @@ class HomeController extends Controller
         }
 
         $discord = [];
-        $discord['status'] = $request->user()->discord_linked == 1 ? 'linked' : 'unlinked';
-        $discord['username'] = $request->user()->username;
+
+        if ($request->user()->discord_linked == 1) {
+            $discord['status'] = $this->isDBVerified($request->user()->discord_id) ? 'linked' : 'linked-unverified';
+            $discord['username'] = $request->user()->username;
+        }
 
         $verification = TelegramVerified::where('fluffici_id', $request->user()->id);
 
         $telegram = [];
-        $telegram['status'] = $verification->exists() ? 'linked' : 'unlinked';
+        if ($verification->exists()) {
+            $verification = $verification->first();
 
-        $verification = $verification->first();
-        $telegram['username'] = $verification->username;
+            $telegram['status'] = 'linked';
+            $telegram['username'] = $verification->username;
+        } else {
+            $telegram['status'] = 'unlinked';
+        }
 
         return view('layouts.link-account', compact('discord', 'telegram'));
     }

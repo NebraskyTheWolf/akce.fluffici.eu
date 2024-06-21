@@ -1,5 +1,5 @@
 @extends("index")
-@section('title', __('title.link-account'))
+@section('title', __('common.title.link-account'))
 
 @section('head')
     <style>
@@ -34,6 +34,10 @@
 
         .platform.linked {
             border-color: #55ff6d;
+        }
+
+        .platform.linked-unverified {
+            border-color: #fdeb2e;
         }
 
         .platform.unlinked {
@@ -270,12 +274,14 @@
         </div>
 
         <div class="platforms">
-            <a class="platform discord {{ $discord['status'] }}" href="{{ $discord['status'] == 'linked' ? 'https://api.fluffici.eu/api/user/@me/discord/disconnect' : 'https://api.fluffici.eu/api/user/@me/discord/login' }}">
+            <a class="platform discord {{ $discord['status'] }}" href="{{ $discord['status'] == 'linked' ? '' : 'https://api.fluffici.eu/api/user/@me/discord/login' }}">
                 <div class="dot {{ $discord['status'] == 'linked' ? 'linked' : 'unlinked' }}"></div>
                 <img src="{{ url('/img/discord.png') }}" alt="Discord" style="width: 108px;height: 100px;margin: auto;">
                 <h2>Discord</h2>
                 @if($discord['status'] == 'linked')
                     <p>Připojen jako:<br><strong>@</strong><strong>{{ $discord['username'] }}</strong></p>
+                @elseif($discord['status'] == 'linked-unverified')
+                    <p>{{ __('common.linked.unverified') }}</p>
                 @else
                     <p>{{ __('common.discord.unlinked') }}</p>
                 @endif
@@ -304,7 +310,7 @@
                         </ul>
                     </div>
                 @endif
-                <input type="text" name="verification_code" placeholder="Verification Code" required>
+                <input type="text" name="verification_code" placeholder="{{ __('common.verification_code') }}" required>
                 <button type="submit">Next</button>
                 <div class="dot help">?</div>
             </form>
@@ -330,7 +336,7 @@
             @endif
 
             $('.dot.help').hover(function() {
-                $(this).append('<div class="tooltip">{{ __('common.help.telegram.verification_code') }}</div>');
+                $(this).append('<div class="tooltip">{!! __('common.help.telegram.verification_code') !!}</div>');
             }, function() {
                 $('.tooltip').remove();
             });
