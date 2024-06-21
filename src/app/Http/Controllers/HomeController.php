@@ -227,7 +227,7 @@ class HomeController extends Controller
                 return redirect()->route('outings')->with('flash.error', __('common.verification.required'));
             }
         } else {
-            return redirect()->route('outings')->with('flash.error', __('common.discord.required'));
+            return redirect()->route('link-account')->with('flash.error', __('common.discord.required'));
         }
     }
 
@@ -378,9 +378,10 @@ class HomeController extends Controller
 
         $verification = TelegramVerified::where('fluffici_id', $request->user()->id);
 
-
         $telegram = [];
         $telegram['status'] = $verification->exists() ? 'linked' : 'unlinked';
+
+        $verification = $verification->first();
         $telegram['username'] = $verification->username;
 
         return view('layouts.link-account', compact('discord', 'telegram'));
@@ -394,6 +395,7 @@ class HomeController extends Controller
         $verification = TelegramVerification::where('verification_code', $request->input('verification_code'));
 
         if ($verification->exists()) {
+            $verification = $verification->first();
             $verification->status = 'VERIFIED';
             $verification->save();
 
