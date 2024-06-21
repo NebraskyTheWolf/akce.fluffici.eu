@@ -66,6 +66,10 @@
             background-color: #ff003b;
         }
 
+        .dot.linked-unverified {
+            background-color: #fdeb2e;
+        }
+
         @keyframes pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(85, 255, 109, 0.7);
@@ -274,8 +278,8 @@
         </div>
 
         <div class="platforms">
-            <a class="platform discord {{ $discord['status'] }}" href="{{ $discord['status'] == 'linked' ? '' : 'https://api.fluffici.eu/api/user/@me/discord/login' }}">
-                <div class="dot {{ $discord['status'] == 'linked' ? 'linked' : 'unlinked' }}"></div>
+            <a class="platform discord {{ $discord['status'] }}" href="{{ $discord['status'] == 'linked' ? 'https://api.fluffici.eu/api/user/@me/discord/disconnect' : 'https://api.fluffici.eu/api/user/@me/discord/login' }}">
+                <div class="dot {{ $discord['status'] }}"></div>
                 <img src="{{ url('/img/discord.png') }}" alt="Discord" style="width: 108px;height: 100px;margin: auto;">
                 <h2>Discord</h2>
                 @if($discord['status'] == 'linked')
@@ -286,7 +290,7 @@
                     <p>{{ __('common.discord.unlinked') }}</p>
                 @endif
             </a>
-            <div id="telegram-{{ $telegram['status'] }}" class="platform telegram {{ $telegram['status'] }}">
+            <a id="telegram-{{ $telegram['status'] }}" class="platform telegram {{ $telegram['status'] }}" href="{{ $telegram['status'] == 'linked' ? 'https://akce.fluffici.eu/unlink-telegram' : '' }}">
                 <div class="dot {{ $telegram['status'] }}"></div>
                 <img src="{{ url('/img/telegram.png') }}" alt="Telegram" style="width: 108px;height: 108px;margin: auto;">
                 <h2>Telegram</h2>
@@ -295,7 +299,7 @@
                 @else
                     <p>{{ __('common.telegram.unlinked') }}</p>
                 @endif
-            </div>
+            </a>
         </div>
 
         <div class="form-container" hidden="">

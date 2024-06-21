@@ -422,6 +422,21 @@ class HomeController extends Controller
         }
     }
 
+    public function unlinkTelegram(Request $request)
+    {
+        if (Auth::guest()) {
+            return redirect()->route('outings')->with('flash.error', __('common.login.required'));
+        }
+
+        $verification = TelegramVerified::where('fluffici_id', $request->user()->id);
+
+        if ($verification->exists()) {
+            $verification->first()->delete();
+        }
+
+        return redirect()->route('link-account');
+    }
+
     public function logout(Request $request): RedirectResponse {
         $request->session()->flush();
         Auth::logout();

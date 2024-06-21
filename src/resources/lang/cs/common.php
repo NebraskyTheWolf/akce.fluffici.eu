@@ -79,6 +79,15 @@ return [
     'maintenance' => '500',
     'maintenance.description' => 'Kolo se nám polámalo... Došlo k interní chybě.',
 
-    'common.upload.success' => 'Všechny vaše soubory byly nahrány úspěšně.',
-    'common.upload.error' => 'Při nahrávání vašich souborů došlo k chybě.',
+    'upload.success' => 'Všechny vaše soubory byly nahrány úspěšně.',
+    'upload.error' => 'Při nahrávání vašich souborů došlo k chybě.',
+
+    'title.link-account' => 'Propojit svůj účet',
+    'link-account.title' => 'Vyberte platformu, kterou chcete propojit',
+    'discord.unlinked' => 'Ještě jste nepropojili svůj Discord účet',
+    'linked.unverified' => 'Váš Discord účet je propojen, ale nejste ověřeni na našem Discord serveru.',
+    'telegram.unlinked' => 'Ještě jste nepropojili svůj Telegram účet',
+    'verification_code' => 'Zadejte svůj ověřovací kód',
+    'telegram.setup' => 'Nastavení Telegramu',
+    'help.telegram.verification_code' => '<h5>Krok 1:</h5> Přejděte na Telegram.<br><h5>Krok 2:</h5> Vyhledejte bota <h5>@Fluffici_bot</h5>, použijte příkaz <h5>/start</h5>.<br><h5>Krok 3:</h5> Zkopírujte/vložte ověřovací kód do formuláře a klikněte na <h5>Další</h5>.',
 ];

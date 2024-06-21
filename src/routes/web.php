@@ -48,6 +48,9 @@ Route::get('/link-account', [HomeController::class, 'linkAccount'])
 Route::post('/link-telegram', [HomeController::class, 'linkTelegram'])
     ->name('link-telegram');
 
+Route::get('/unlink-telegram', [HomeController::class, 'unlinkTelegram'])
+    ->name('unlink-telegram');
+
 Route::get('/logout', [HomeController::class, 'logout'])
     ->name('profile.logout');
 
