@@ -94,6 +94,6 @@ return [
     'telegram.unlinked' => 'You have not linked your telegram account yet',
     'verification_code' => 'Enter your verification code',
     'telegram.setup' => 'Setting up telegram',
-    'help.telegram.verification_code' => '<h5>Step 1:</h5> Go on Telegram.<br><h5>Step 2:</h5> Search for the bot <h5>@Fluffici_bot</h5>, use the command <h5>/start</h5>.<br><h5>Step 3:</h5> Copy/paste the verification code in the form and click on <h5>Next</h5>.'
-
+    'help.telegram.verification_code' => '<h5>Step 1:</h5> Go on Telegram.<br><h5>Step 2:</h5> Search for the bot <h5>@Fluffici_bot</h5>, use the command <h5>/start</h5>.<br><h5>Step 3:</h5> Copy/paste the verification code in the form and click on <h5>Next</h5>.',
+    'verification_code.invalid' => 'The verification code you entered is invalid.'
 ];

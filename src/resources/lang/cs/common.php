@@ -90,4 +90,5 @@ return [
     'verification_code' => 'Zadejte svůj ověřovací kód',
     'telegram.setup' => 'Nastavení Telegramu',
     'help.telegram.verification_code' => '<h5>Krok 1:</h5> Přejděte na Telegram.<br><h5>Krok 2:</h5> Vyhledejte bota <h5>@Fluffici_bot</h5>, použijte příkaz <h5>/start</h5>.<br><h5>Krok 3:</h5> Zkopírujte/vložte ověřovací kód do formuláře a klikněte na <h5>Další</h5>.',
+    'verification_code.invalid' => 'Ověřovací kód, který jste zadali, je neplatný.',
 ];
