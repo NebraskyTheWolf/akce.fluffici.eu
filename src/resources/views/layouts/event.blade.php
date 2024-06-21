@@ -95,7 +95,7 @@
                         <div class="pictures-img skeleton-animation">
                             @if(ReportedAttachments::where('attachment_id', $picture->attachment_id)->exists())
                                 <div class="spoiler">
-                                    <img src="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}" alt="{{ $picture->attachment_id }}" onclick="openModal('https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}', '{{ $picture->attachment_id }}', '{{ $picture->user->avatar }}', '{{ $picture->user->name }}', '{{ $picture->user->discord_id }}')"
+                                    <img src="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}" alt="{{ $picture->attachment_id }}" onclick="openModal('https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}', '{{ $picture->attachment_id }}', '{{ $picture->user->avatar }}', '{{ $picture->user->name }}')"
                                         class="pictures-img" data-picture-attachment="{{ $picture->attachment_id }}">
                                     <div class="alert-overlay">
                                         <div class="alert-message">
@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                             @else
-                                <img src="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}" alt="{{ $picture->attachment_id }}" onclick="openModal('https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}', '{{ $picture->attachment_id }}', '{{ $picture->user->avatar }}', '{{ $picture->user->name }}', '{{ $picture->user->discord_id }}')"
+                                <img src="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}" alt="{{ $picture->attachment_id }}" onclick="openModal('https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}', '{{ $picture->attachment_id }}', '{{ $picture->user->avatar }}', '{{ $picture->user->name }}')"
                                      class="pictures-img" data-picture-attachment="{{ $picture->attachment_id }}">
                             @endif
                         </div>
@@ -128,7 +128,6 @@
                 </div>
                 <div class="author-details">
                     <p id="author-name"></p>
-                    <p id="author-id"></p>
                     <p id="attachment-id" hidden=""></p>
                 </div>
             </div>
@@ -148,7 +147,7 @@
 
 @section('script')
     <script>
-        function openModal(imageUrl, attachmentId, authorAvatar, authorName, authorId) {
+        function openModal(imageUrl, attachmentId, authorAvatar, authorName) {
             document.getElementById("modalImg").src = imageUrl;
             document.getElementById("myModal").style.display = "block";
             document.getElementById("report-id").href = `https://akce.fluffici.eu/report-content?attachment=${attachmentId}`
@@ -158,7 +157,6 @@
             } else {
                 document.getElementById("author-avatar").src = authorAvatar;
                 document.getElementById("author-name").innerText = authorName;
-                document.getElementById("author-id").innerText = authorId;
                 document.getElementById("attachment-id").innerText = attachmentId;
             }
         }
@@ -169,23 +167,46 @@
 
         function showContextMenu(x, y) {
             const menu = document.getElementById("custom-menu");
+
+            if (!menu) {
+                console.error("Context menu element not found");
+                return;
+            }
+
+            // Get viewport dimensions
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            // Get menu dimensions
+            const menuRect = menu.getBoundingClientRect();
+            const menuWidth = menuRect.width;
+            const menuHeight = menuRect.height;
+
+            // Adjust x and y to keep the menu within the viewport
+            if (x + menuWidth > viewportWidth) {
+                x = viewportWidth - menuWidth - 10; // Add some padding from the edge
+            }
+
+            if (y + menuHeight > viewportHeight) {
+                y = viewportHeight - menuHeight - 10; // Add some padding from the edge
+            }
+
+            // Display the menu
             menu.style.display = "block";
-            menu.style.left = x + "px";
-            menu.style.top = y + "px";
+            menu.style.left = `${x}px`;
+            menu.style.top = `${y}px`;
         }
 
-        function hideContextMenu() {
+        document.addEventListener("click", (event) => {
             const menu = document.getElementById("custom-menu");
-            menu.style.display = "none";
-        }
+            if (menu && menu.style.display === "block") {
+                menu.style.display = "none";
+            }
+        });
 
         document.addEventListener("contextmenu", function (event) {
             event.preventDefault();
             showContextMenu(event.pageX, event.pageY);
-        });
-
-        document.addEventListener("click", function (event) {
-            hideContextMenu();
         });
 
         document.getElementById('menu-item-1').addEventListener('click', function () {

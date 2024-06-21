@@ -319,8 +319,8 @@
                 }
 
                 setTimeout(() => {
-                    window.location.href = '{{ env('PUBLIC_URL') }}'
-                }, 100 * 5)
+                    window.location.href = '{{ env('PUBLIC_URL') }}/event?id=' + $('#event-select').val()
+                }, 1000 * 5)
             }
 
             // Function to open error modal with message

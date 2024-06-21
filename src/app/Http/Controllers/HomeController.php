@@ -215,6 +215,8 @@ class HomeController extends Controller
             return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
 
+        $verification = TelegramVerified::where('fluffici_id', $request->user()->id);
+
         if ($request->user()->discord_linked == 1) {
             if ($this->isDBVerified($request->user()->discord_id)) {
                 $events = Events::where('status', "ENDED")
@@ -226,6 +228,13 @@ class HomeController extends Controller
             } else {
                 return redirect()->route('outings')->with('flash.error', __('common.verification.required'));
             }
+        } else if ($verification->exists()) {
+            $events = Events::where('status', "ENDED")
+                ->where('type', 'PHYSICAL')
+                ->orderby('created_at', 'desc')
+                ->get();
+
+            return view('layouts.submit-pictures', compact('events'));
         } else {
             return redirect()->route('link-account')->with('flash.error', __('common.discord.required'));
         }
