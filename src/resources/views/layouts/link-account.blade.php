@@ -82,19 +82,20 @@
             }
         }
 
-        strong {
+        .platforms strong {
             color: white;
             text-shadow: 2px 2px 4px #000000;
             font-family: "Lexend Deca", sans-serif;
             font-size: x-large;
         }
 
-        h2 {
+        .platforms h2 {
             color: white;
             font-family: "Luckiest Guy";
+            padding-bottom: 60px;
         }
 
-        p {
+        .platforms p {
             color: white;
         }
 
