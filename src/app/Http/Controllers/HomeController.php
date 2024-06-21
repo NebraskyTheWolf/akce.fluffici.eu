@@ -401,7 +401,8 @@ class HomeController extends Controller
             return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
 
-        $verification = TelegramVerification::where('verification_code', $request->input('verification_code'));
+        $verification = TelegramVerification::where('verification_code', $request->input('verification_code'))
+            ->where('status', 'PENDING');
 
         if ($verification->exists()) {
             $verification = $verification->first();
