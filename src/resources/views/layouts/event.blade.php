@@ -184,11 +184,11 @@
 
             // Adjust x and y to keep the menu within the viewport
             if (x + menuWidth > viewportWidth) {
-                x = viewportWidth - menuWidth - 10; // Add some padding from the edge
+                x = viewportWidth - menuWidth - 10;
             }
 
             if (y + menuHeight > viewportHeight) {
-                y = viewportHeight - menuHeight - 10; // Add some padding from the edge
+                y = viewportHeight - menuHeight - 10;
             }
 
             // Display the menu
@@ -197,16 +197,18 @@
             menu.style.top = `${y}px`;
         }
 
-        document.addEventListener("click", (event) => {
-            const menu = document.getElementById("custom-menu");
-            if (menu && menu.style.display === "block") {
-                menu.style.display = "none";
-            }
+        document.addEventListener("contextmenu", function(event) {
+            event.preventDefault();
+            const x = event.clientX;
+            const y = event.clientY;
+            showContextMenu(x, y);
         });
 
-        document.addEventListener("contextmenu", function (event) {
-            event.preventDefault();
-            showContextMenu(event.pageX, event.pageY);
+        document.addEventListener("click", function() {
+            const menu = document.getElementById("custom-menu");
+            if (menu) {
+                menu.style.display = "none";
+            }
         });
 
         document.getElementById('menu-item-1').addEventListener('click', function () {

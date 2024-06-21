@@ -235,11 +235,10 @@
 
             .form-container {
                 width: 90%;
-                padding: 10px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                 position: relative;
                 top: auto;
-                left: auto;
+                left: 5%;
                 transform: none;
                 margin: 20px 0;
             }

@@ -42,9 +42,8 @@ body {
     background-color: #1a1c1c;
     padding: 20px;
     border-radius: 10px;
-    overflow-y: auto;
-    scrollbar-color: #334141 #1F2937; /* scrollbar-thumb-color scrollbar-track-color */
-    scrollbar-width: thin; /* "auto" for OS-dependent style */
+    scrollbar-color: #334141 #1F2937;
+    scrollbar-width: thin;
     height: fit-content;
 }
 
@@ -650,6 +649,14 @@ a {
     .trello-column {
         height: initial;
     }
+
+    .sidebar-nav ul li a {
+        font-size: 12px;
+    }
+
+    .logout-btn {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -687,5 +694,9 @@ a {
 
     .developer-card a:hover {
         text-decoration: underline;
+    }
+
+    .header {
+        font-size: medium;
     }
 }
