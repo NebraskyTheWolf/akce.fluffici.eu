@@ -266,7 +266,6 @@
             .alert.alert-danger li {
                 font-size: 14px;
             }
-
         }
     </style>
 @endsection

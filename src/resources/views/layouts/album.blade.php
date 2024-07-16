@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90" style="display: none;">
+        <div x-show="open" x-on:click.away="closeModal()" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90" style="display: none;">
             <div class="bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all w-full max-w-lg mx-auto">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flex justify-between items-start">
@@ -109,7 +109,6 @@
                     this.authorAvatar = event.target.dataset.authorAvatar;
                     this.authorName = event.target.dataset.authorName;
                     this.open = true;
-                    console.log('modal state updated', this.open, this.imageUrl, this.attachmentId, this.authorAvatar, this.authorName);
                 },
                 closeModal() {
                     this.open = false;

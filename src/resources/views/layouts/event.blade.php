@@ -64,7 +64,7 @@
             </div>
         </section>
 
-        @if($event->type === "PHYSICAL" && $event->map_url != null)
+        @if($event->type === "PHYSICAL")
             <section class="pictures">
                 <h3 class="pictures-header">Mapa</h3>
                 <div class="pictures-gallery">
@@ -77,15 +77,19 @@
                     </iframe>
                 </div>
             </section>
+        @endif
 
-            <section class="pictures" x-data="modalHandler()">
+        @if($event->type === "PHYSICAL" && $event->map_url != null)
+            <section class="pictures">
                 <h3 class="pictures-header">{{ __('common.location') }}</h3>
                 <div class="pictures-gallery">
                     <img src="{{ $event->map_url }}" alt="location"
                          data-image-url="{{ $event->map_url }}"
-                         data-author-avatar="none"
-                         data-author-name="Administrator"
-                         @click="openModal($event)">
+                         data-author-avatar="https://autumn.fluffici.eu/avatars/abwHrJNTWFU55eFKFt3bvFbzsiqHH9ru51eODeC-4C"
+                         data-author-name="Asherro"
+                         data-picture-attachment="none"
+                         @click="openModal($event)"
+                         class="mapa">
                 </div>
             </section>
         @endif
@@ -95,9 +99,9 @@
                     allowtransparency="true" frameborder="0"
                     sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         @else
-            <section class="pictures">
+            <section class="pictures" {{ $event->status !== "ENDED" ? 'hidden' : '' }}>
                 <h3 class="pictures-header">{{ __('common.pictures') }}</h3>
-                <div class="pictures-gallery">
+                <div class="pictures-gallery" x-data="contextMenuHandler()" @click.outside="hideContextMenu()">
                     @foreach($pictures as $picture)
                         <div class="pictures-img">
                             @if(ReportedAttachments::where('attachment_id', $picture->attachment_id)->exists())
@@ -128,11 +132,19 @@
                             @endif
                         </div>
                     @endforeach
+
+                    <div x-show="showMenu" :style="{ top: y + 'px', left: x + 'px' }" class="fixed bg-white shadow-md rounded-md overflow-hidden">
+                        <a :href="`https://akce.fluffici.eu/report-content?attachment=${attachmentId}`" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Report</a>
+                        <button @click="copyToClipboard(attachmentId)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy ID</button>
+                        <button @click="copyToClipboard(`https://autumn.fluffici.eu/photos/${attachmentId}`)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Attachment URL</button>
+                    </div>
+
+                    <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-1 px-2 rounded mt-1 w-auto" href="/gallery/album/{{ $event->event_id }}">Více</a>
                 </div>
             </section>
         @endif
 
-        <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90" style="display: none;">
+        <div x-show="open" x-on:click.away="closeModal()" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90" style="display: none;">
             <div class="bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all w-full max-w-lg mx-auto">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="flex justify-between items-start">
@@ -163,14 +175,6 @@
                 </div>
             </div>
         </div>
-
-        <div x-data="contextMenuHandler()" @click.away="hideContextMenu">
-            <div x-show="showMenu" :style="{ top: y + 'px', left: x + 'px' }" class="fixed bg-white shadow-md rounded-md overflow-hidden">
-                <a :href="`https://akce.fluffici.eu/report-content?attachment=${attachmentId}`" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Report</a>
-                <button @click="copyToClipboard(attachmentId)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy ID</button>
-                <button @click="copyToClipboard(`https://autumn.fluffici.eu/photos/${attachmentId}`)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Attachment URL</button>
-            </div>
-        </div>
     </section>
 @endsection
 
@@ -189,7 +193,6 @@
                     this.authorAvatar = event.target.dataset.authorAvatar;
                     this.authorName = event.target.dataset.authorName;
                     this.open = true;
-                    console.log('modal state updated', this.open, this.imageUrl, this.attachmentId, this.authorAvatar, this.authorName);
                 },
                 closeModal() {
                     this.open = false;
@@ -209,16 +212,12 @@
                 },
                 hideContextMenu() {
                     this.showMenu = false;
+                },
+                copyToClipboard(text) {
+                    window.navigator.clipboard.writeText(text)
+                    this.showMenu = false;
                 }
             }));
-
-            window.copyToClipboard = (text) => {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('Copied to clipboard');
-                }, () => {
-                    alert('Failed to copy');
-                });
-            }
         });
     </script>
 @endsection

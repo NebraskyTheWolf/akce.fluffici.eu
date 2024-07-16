@@ -51,9 +51,17 @@ body {
     padding-bottom: 10px;
 }
 
+.mapa {
+    max-width: initial; max-height: initial;
+}
+
 @media only screen and (max-width: 768px) {
     body {
         display: initial;
+    }
+
+    .mapa {
+        max-width: none; max-height: none;
     }
 
     .sidebar {

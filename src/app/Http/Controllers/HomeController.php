@@ -183,6 +183,7 @@ class HomeController extends Controller
 
         $pictures = EventAttachments::where('event_id', $event->event_id)
             ->orderBy('created_at', 'desc')
+            ->limit(5)
             ->get();
 
         foreach ($pictures as $picture) {
@@ -475,6 +476,7 @@ class HomeController extends Controller
 
         if (strlen($descriptionWithLinks) > 300) {
             $event->descriptions = substr($descriptionWithLinks, 0, 300);
+            $event->descriptions = $this->removeImageFromString($event->descriptions);
             $event->descriptions .= '  <span style="font-family: Arial, sans-serif; font-size: 16px; color: #FF002E; font-weight: bold;"> ≫ Číst dále...</span>';
         } else {
             $event->descriptions = $descriptionWithLinks;
@@ -485,5 +487,9 @@ class HomeController extends Controller
             $event->startAt = $start->isoFormat('MMMM D, YYYY');
             $event->startAtTime = $start->isoFormat('HH:mm');
         }
+    }
+
+    function removeImageFromString($string) {
+        return preg_replace('/<img[^>]+>/i', '', $string);
     }
 }
