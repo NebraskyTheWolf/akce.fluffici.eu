@@ -81,6 +81,7 @@ body {
     .dashboard-section h2 {
         padding-bottom: 10px;
         margin-left: 20%;
+        font-size: large;
     }
 }
 
@@ -169,7 +170,7 @@ body {
     background-color: #1a1c1c;
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 2%;
 }
 
 .dark\:bg-dots-lighter{
@@ -179,7 +180,8 @@ body {
 
 .dashboard-section h2 {
     color: #fff;
-    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: xx-large;
     font-family: 'Lexend Deca', sans-serif;
 }
 
@@ -631,6 +633,10 @@ a {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.developer-card p {
+    font-family: 'Lexend Deca', sans-serif;
+}
+
 .developer-card a {
     color: #FF002E;
     text-decoration: none;
@@ -648,6 +654,10 @@ a {
 
     .trello-column {
         height: initial;
+    }
+
+    .dashboard-section {
+        font-size: large;
     }
 
     .sidebar-nav ul li a {
@@ -677,6 +687,10 @@ a {
         align-items: center;
         max-width: 100vw; /* Ensure it doesn't exceed screen width */
         padding: 10px 20px; /* Increased padding for better touch experience */
+    }
+
+    .footer-content p {
+        font-family: 'Lexend Deca', sans-serif;
     }
 
     .developer-card {

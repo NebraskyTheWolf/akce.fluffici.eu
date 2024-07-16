@@ -13,6 +13,9 @@
             <li class="{{ request()->routeIs('online-events') ? 'active' : '' }}"><a
                     href="{{ route('online-events') }}"><i class="fas fa-calendar-alt"></i> {{ __('common.online') }}
                 </a></li>
+
+            <li class="{{ request()->routeIs('gallery') ? 'active' : '' }}"><a href="{{ route('gallery') }}" hidden=""><i
+                        class="fas fa-images"></i> {{ __('common.gallery') }}</a></li>
         </ul>
     </div>
 

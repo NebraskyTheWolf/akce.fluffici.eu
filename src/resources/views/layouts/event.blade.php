@@ -4,8 +4,12 @@
 @section('image', $event->banner_url)
 @section('description', strip_tags($event->descriptions) . ' · ' . ucwords(strtolower($event->status)))
 
+@section("head")
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+@endsection
+
 @section('content')
-    <section class="container-event">
+    <section class="container-event" x-data="modalHandler()">
         <img src="{{ $event->banner_url }}" alt="Event Banner" class="event-banner">
 
         <section class="event-info-card">
@@ -46,12 +50,12 @@
             </div>
 
             <div class="event-info-details">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                </svg>
                 <div class="blog-editor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                    </svg>
                     <p>{{ __('common.description') }}:</p>
                     <div class="description-content" contenteditable="false">
                         {!! $event->descriptions !!}
@@ -65,20 +69,23 @@
                 <h3 class="pictures-header">Mapa</h3>
                 <div class="pictures-gallery">
                     <iframe id="map"
-                        src="https://maps.google.com/maps?q={{ $latitude }},{{ $longitude }}&hl=cs;z=4&amp;output=embed"
-                        width="800"
-                        height="400"
-                        frameborder="0"
-                        style="border:0" allowfullscreen>
+                            src="https://maps.google.com/maps?q={{ $latitude }},{{ $longitude }}&hl=cs;z=4&amp;output=embed"
+                            width="800"
+                            height="400"
+                            frameborder="0"
+                            style="border:0" allowfullscreen>
                     </iframe>
                 </div>
             </section>
 
-            <section class="pictures">
+            <section class="pictures" x-data="modalHandler()">
                 <h3 class="pictures-header">{{ __('common.location') }}</h3>
                 <div class="pictures-gallery">
-                    <img class="skeleton-animation" src="{{ $event->map_url }}" alt="location"
-                         onclick="openModal('{{ $event->map_url }}', 'map', 'none', 'Administrator', '')">
+                    <img src="{{ $event->map_url }}" alt="location"
+                         data-image-url="{{ $event->map_url }}"
+                         data-author-avatar="none"
+                         data-author-name="Administrator"
+                         @click="openModal($event)">
                 </div>
             </section>
         @endif
@@ -92,11 +99,16 @@
                 <h3 class="pictures-header">{{ __('common.pictures') }}</h3>
                 <div class="pictures-gallery">
                     @foreach($pictures as $picture)
-                        <div class="pictures-img skeleton-animation">
+                        <div class="pictures-img">
                             @if(ReportedAttachments::where('attachment_id', $picture->attachment_id)->exists())
                                 <div class="spoiler">
-                                    <img src="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}" alt="{{ $picture->attachment_id }}" onclick="openModal('https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}', '{{ $picture->attachment_id }}', '{{ $picture->user->avatar }}', '{{ $picture->user->name }}')"
-                                        class="pictures-img" data-picture-attachment="{{ $picture->attachment_id }}">
+                                    <img src="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}" alt="{{ $picture->attachment_id }}"
+                                         data-image-url="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}"
+                                         data-author-avatar="{{ $picture->user->avatar }}"
+                                         data-author-name="{{ $picture->user->name }}"
+                                         @click="openModal($event)"
+                                         class="pictures-img" data-picture-attachment="{{ $picture->attachment_id }}"
+                                         @contextmenu.prevent="showContextMenu($event, '{{ $picture->attachment_id }}')">
                                     <div class="alert-overlay">
                                         <div class="alert-message">
                                             <p style="color: #fff; text-transform: uppercase; font-family: 'Lexend Deca', serif;">
@@ -106,132 +118,107 @@
                                     </div>
                                 </div>
                             @else
-                                <img src="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}" alt="{{ $picture->attachment_id }}" onclick="openModal('https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}', '{{ $picture->attachment_id }}', '{{ $picture->user->avatar }}', '{{ $picture->user->name }}')"
-                                     class="pictures-img" data-picture-attachment="{{ $picture->attachment_id }}">
+                                <img src="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}" alt="{{ $picture->attachment_id }}"
+                                     data-image-url="https://autumn.fluffici.eu/photos/{{ $picture->attachment_id }}"
+                                     data-author-avatar="{{ $picture->user->avatar }}"
+                                     data-author-name="{{ $picture->user->name }}"
+                                     @click="openModal($event)"
+                                     class="pictures-img" data-picture-attachment="{{ $picture->attachment_id }}"
+                                     @contextmenu.prevent="showContextMenu($event, '{{ $picture->attachment_id }}')">
                             @endif
                         </div>
                     @endforeach
                 </div>
             </section>
         @endif
-    </section>
-@endsection
 
-@section('modals')
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
-            <img id="modalImg" src="" alt="Full Image">
-            <div class="author-info" id="info">
-                <div class="author-avatar">
-                    <img id="author-avatar" src="" alt="Author Avatar">
-                </div>
-                <div class="author-details">
-                    <p id="author-name"></p>
-                    <p id="attachment-id" hidden=""></p>
-                </div>
-            </div>
-            <div class="dropdown">
-                <div class="dropdown-content">
-                    <a id="report-id" href="#" class="btn">Report</a>
+        <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90" style="display: none;">
+            <div class="bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all w-full max-w-lg mx-auto">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-lg leading-6 font-medium text-white"></h3>
+                        <button @click="closeModal" class="text-gray-400 hover:text-gray-300">
+                            <span class="sr-only">Close</span>
+                            &times;
+                        </button>
+                    </div>
+                    <div class="relative mt-3 group">
+                        <img :src="imageUrl" alt="Full Image" class="max-w-full h-auto mx-auto">
+                        <a :href="`https://akce.fluffici.eu/report-content?attachment=${attachmentId}`"
+                           class="absolute top-0 left-0 m-2 text-white hidden group-hover:block">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-10a9.99 9.99 0 00-9-5 9.99 9.99 0 00-9 5m18 5a9.99 9.99 0 01-9 5 9.99 9.99 0 01-9-5m18 0V6m0 5v5m-18 0V6m0 5v5m3 5h12"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="mt-5" x-show="authorAvatar !== 'none'">
+                        <div class="flex items-center">
+                            <img :src="authorAvatar" alt="Author Avatar" class="w-10 h-10 rounded-full">
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-white" x-text="authorName"></p>
+                                <span class="text-xs text-gray-400">Autor</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="custom-menu">
-            <div class="menu-item" id="menu-item-1">Report</div>
-            <div class="menu-item" id="menu-item-2">Copy ID</div>
-            <div class="menu-item" id="menu-item-3">Copy Attachment URL</div>
+
+        <div x-data="contextMenuHandler()" @click.away="hideContextMenu">
+            <div x-show="showMenu" :style="{ top: y + 'px', left: x + 'px' }" class="fixed bg-white shadow-md rounded-md overflow-hidden">
+                <a :href="`https://akce.fluffici.eu/report-content?attachment=${attachmentId}`" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Report</a>
+                <button @click="copyToClipboard(attachmentId)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy ID</button>
+                <button @click="copyToClipboard(`https://autumn.fluffici.eu/photos/${attachmentId}`)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy Attachment URL</button>
+            </div>
         </div>
-    </div>
+    </section>
 @endsection
 
 @section('script')
     <script>
-        function openModal(imageUrl, attachmentId, authorAvatar, authorName) {
-            document.getElementById("modalImg").src = imageUrl;
-            document.getElementById("myModal").style.display = "block";
-            document.getElementById("report-id").href = `https://akce.fluffici.eu/report-content?attachment=${attachmentId}`
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('modalHandler', () => ({
+                open: false,
+                imageUrl: '',
+                authorAvatar: '',
+                authorName: '',
+                attachmentId: '',
+                openModal(event) {
+                    this.imageUrl = event.target.dataset.imageUrl;
+                    this.attachmentId = event.target.dataset.pictureAttachment;
+                    this.authorAvatar = event.target.dataset.authorAvatar;
+                    this.authorName = event.target.dataset.authorName;
+                    this.open = true;
+                    console.log('modal state updated', this.open, this.imageUrl, this.attachmentId, this.authorAvatar, this.authorName);
+                },
+                closeModal() {
+                    this.open = false;
+                }
+            }));
 
-            if (authorAvatar === "none") {
-                $('#info').hide()
-            } else {
-                document.getElementById("author-avatar").src = authorAvatar;
-                document.getElementById("author-name").innerText = authorName;
-                document.getElementById("attachment-id").innerText = attachmentId;
+            Alpine.data('contextMenuHandler', () => ({
+                showMenu: false,
+                x: 0,
+                y: 0,
+                attachmentId: '',
+                showContextMenu(event, attachmentId) {
+                    this.showMenu = true;
+                    this.x = event.clientX;
+                    this.y = event.clientY;
+                    this.attachmentId = attachmentId;
+                },
+                hideContextMenu() {
+                    this.showMenu = false;
+                }
+            }));
+
+            window.copyToClipboard = (text) => {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Copied to clipboard');
+                }, () => {
+                    alert('Failed to copy');
+                });
             }
-        }
-
-        function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-        }
-
-        function showContextMenu(x, y) {
-            const menu = document.getElementById("custom-menu");
-
-            if (!menu) {
-                console.error("Context menu element not found");
-                return;
-            }
-
-            // Get viewport dimensions
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
-
-            // Get menu dimensions
-            const menuRect = menu.getBoundingClientRect();
-            const menuWidth = menuRect.width;
-            const menuHeight = menuRect.height;
-
-            // Adjust x and y to keep the menu within the viewport
-            if (x + menuWidth > viewportWidth) {
-                x = viewportWidth - menuWidth - 10;
-            }
-
-            if (y + menuHeight > viewportHeight) {
-                y = viewportHeight - menuHeight - 10;
-            }
-
-            // Display the menu
-            menu.style.display = "block";
-            menu.style.left = `${x}px`;
-            menu.style.top = `${y}px`;
-        }
-
-        document.addEventListener("contextmenu", function(event) {
-            event.preventDefault();
-            const x = event.clientX;
-            const y = event.clientY;
-            showContextMenu(x, y);
-        });
-
-        document.addEventListener("click", function() {
-            const menu = document.getElementById("custom-menu");
-            if (menu) {
-                menu.style.display = "none";
-            }
-        });
-
-        document.getElementById('menu-item-1').addEventListener('click', function () {
-            const attachmentId = document.getElementById("attachment-id").innerText
-            window.location.href = `https://akce.fluffici.eu/report-content?attachment=${attachmentId}`
-        });
-
-        document.getElementById('menu-item-2').addEventListener('click', function () {
-            const copyText = document.getElementById("attachment-id").innerText;
-            navigator.clipboard.writeText(copyText).then(function () {
-                toastr.info('{{ __('common.clipboard.copied') }}')
-            }, function (err) {
-                toastr.error('{{ __('common.clipboard.error') }}')
-            });
-        });
-
-        document.getElementById('menu-item-3').addEventListener('click', function () {
-            const copyText = document.getElementById("attachment-id").innerText;
-            navigator.clipboard.writeText(`https://autumn.fluffici.eu/photos/${copyText}`).then(function () {
-                toastr.info('{{ __('common.clipboard.copied') }}')
-            }, function (err) {
-                toastr.error('{{ __('common.clipboard.error') }}')
-            });
         });
     </script>
 @endsection

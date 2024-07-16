@@ -155,30 +155,22 @@ body {
     animation: bellRotationLeft 0.3s ease-in-out forwards, bellRotationRight 0.3s ease-in-out 0.3s forwards;
 }
 
-.event-info-status {
-    padding: 5px 10px;
-    border-radius: 5px;
-    background-color: #FF002E;
-    color: #FFFFFF;
-}
-
 .event-info-details {
-    color: #FFFFFF;
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
     font-size: x-large;
     font-family: "Lexend Deca", serif;
+    color: #FFFFFF;
 }
-
 .event-info-details svg {
-    margin-right: 4px;
+    margin-right: 10px;
 }
-
 .event-info-link {
     color: #0A4FFF;
     text-decoration: none;
     transition: color 0.3s ease;
 }
-
 .event-info-link:hover {
     text-decoration: underline;
 }
@@ -515,6 +507,7 @@ body {
 }
 
 .description-content {
+    margin-left: 46px; /* Adjust based on icon size to align properly */
     margin-top: 10px;
     color: white;
     font-size: 16px;

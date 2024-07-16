@@ -234,6 +234,11 @@
 
                 // Loop through each selected file and upload one by one
                 $.each(files, function (index, file) {
+                    if (file.size > 8 * 1024 * 1024) {
+                        toastr.error(`File size should not exceed 8MB. File "${file.name}" is too large.`);
+                        return;
+                    }
+
                     const formData = new FormData();
                     formData.append('file', file);
 

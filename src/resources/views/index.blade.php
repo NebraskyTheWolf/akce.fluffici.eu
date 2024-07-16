@@ -30,6 +30,11 @@
 
     <link rel="icon" href="{{ url('img/favicon.png') }}">
 
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.js"></script>
+    <link href="https://unpkg.com/tippy.js@6/dist/tippy.css" rel="stylesheet">
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap">
     <link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url('/css/event.css') }}">
@@ -130,7 +135,7 @@
 
 <main class="main-content">
     <section class="dashboard-section">
-        <h2>@yield('title')</h2>
+        <h2>@yield('title') {{ Route::currentRouteNamed('akce') ? ' - INFORMACE O AKCI' : '' }}</h2>
     </section>
 
     @yield('content')

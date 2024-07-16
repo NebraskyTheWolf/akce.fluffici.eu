@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,17 @@ Route::get('/', [HomeController::class, 'outings'])
 Route::get('/online-events', [HomeController::class, 'onlineEvents'])
     ->name('online-events');
 
-Route::get('/event', [HomeController::class, 'akce']);
+Route::get('/gallery', [GalleryController::class, 'showGallery'])
+    ->name('gallery');
+
+Route::get('/gallery/album/{id}', [GalleryController::class, 'showAlbum'])
+    ->name('gallery.show-album');
+
+Route::get('/search', [GalleryController::class, 'showGallery'])
+    ->name('search');
+
+Route::get('/event', [HomeController::class, 'akce'])
+    ->name('akce');
 
 Route::get('/submitted-pictures', [HomeController::class, 'submittedPictures'])
     ->name('profile.photos');
