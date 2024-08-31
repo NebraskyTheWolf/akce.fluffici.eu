@@ -20,30 +20,9 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\ValidationException;
 
-/*
-                            LICENCE PRO PROPRIETÁRNÍ SOFTWARE
-              Verze 1, Organizace: Fluffici, z.s. IČO: 19786077, Rok: 2024
-                            PODMÍNKY PRO POUŽÍVÁNÍ
-
-    a. Použití: Software lze používat pouze podle přiložené dokumentace.
-    b. Omezení reprodukce: Kopírování softwaru bez povolení je zakázáno.
-    c. Omezení distribuce: Distribuce je povolena jen přes autorizované kanály.
-    d. Oprávněné kanály: Distribuci určuje výhradně držitel autorských práv.
-    e. Nepovolené šíření: Šíření mimo povolené podmínky je zakázáno.
-    f. Právní důsledky: Porušení podmínek může vést k právním krokům.
-    g. Omezení úprav: Úpravy softwaru jsou zakázány bez povolení.
-    h. Rozsah oprávněných úprav: Rozsah úprav určuje držitel autorských práv.
-    i. Distribuce upravených verzí: Distribuce upravených verzí je povolena jen s povolením.
-    j. Zachování autorských atribucí: Kopie musí obsahovat všechny autorské atribuce.
-    k. Zodpovědnost za úpravy: Držitel autorských práv nenese odpovědnost za úpravy.
-
-    Celý text licence je dostupný na adrese:
-    https://autumn.fluffici.eu/attachments/xUiAJbvhZaXW3QIiLMFFbVL7g7nPC2nfX7v393UjEn/fluffici_software_license_cz.pdf
-*/
-
 class HomeController extends Controller
 {
-    public function outings(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application {
+    public function outings(Request $request) {
         $incoming = Events::where('status', 'INCOMING')
             ->where('type', 'PHYSICAL')
             ->orderBy('created_at', 'asc')
@@ -88,7 +67,7 @@ class HomeController extends Controller
         ));
     }
 
-    public function onlineEvents(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function onlineEvents(Request $request)
     {
         $incoming = Events::where('status', 'INCOMING')
             ->where('type', 'ONLINE')
@@ -135,7 +114,7 @@ class HomeController extends Controller
         ));
     }
 
-    public function akce(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse
+    public function akce(Request $request)
     {
         $eventId = $request->query('id');
         $event = Events::where('event_id', $eventId);
@@ -211,7 +190,7 @@ class HomeController extends Controller
         return redirect()->route('outings');
     }
 
-    public function submittedPictures(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
+    public function submittedPictures(Request $request) {
         if (Auth::guest()) {
             return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
@@ -243,18 +222,18 @@ class HomeController extends Controller
 
     public function isDBVerified(string $snowflake): bool
     {
-        $response = \Httpful\Request::get("https://frdbapi.fluffici.eu/api/users/" . $snowflake . '/is-verified')->expectsJson()->send();
+        $response = \Httpful\Request::get("https://furraidapi.fluffici.eu/is-verified/606534136806637589/" . $snowflake)->expectsJson()->send();
 
         if ($response->code === 200) {
             $body = json_decode(json_encode($response->body), true);
-            return boolval($body['data']['verified']);
+            return boolval($body['isVerified']);
         }
 
         return false;
     }
 
 
-    public function submittedReports(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
+    public function submittedReports(Request $request) {
         if (Auth::guest()) {
             return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }
@@ -266,7 +245,7 @@ class HomeController extends Controller
         return view('layouts.submitted-reports', compact('reports'));
     }
 
-    public function showReport(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
+    public function showReport(Request $request) {
 
         if (Auth::guest()) {
             return redirect()->route('outings')->with('flash.error', __('common.login.required'));
@@ -292,7 +271,7 @@ class HomeController extends Controller
         return view('layouts.show-report', compact('report'));
     }
 
-    public function reportContent(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
+    public function reportContent(Request $request) {
         if (Auth::guest()) {
             return redirect()->route('outings')->with('flash.error', __('common.login.required'));
         }

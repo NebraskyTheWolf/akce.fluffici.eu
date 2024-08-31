@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Alpine.js Modal</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body>
+
+<div x-data="modalHandler()">
+    <!-- Modal Trigger -->
+    <img src="https://autumn.fluffici.eu/photos/sample.jpg" alt="Sample Image"
+         data-image-url="https://autumn.fluffici.eu/photos/sample.jpg"
+         data-author-avatar="https://autumn.fluffici.eu/avatars/sample-avatar.jpg"
+         data-author-name="Sample Author"
+         @click="openModal($event)"
+         class="pictures-img"
+         data-picture-attachment="sample-attachment-id">
+
+    <!-- Modal -->
+
+</div>
+
+<script>
+
+</script>
+
+</body>
+</html>
